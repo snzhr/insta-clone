@@ -6,10 +6,14 @@
       <button>Log in with Facebook</button>
       <span class="or">OR</span>
       <form @submit.prevent="asd">
-        <input type="text" placeholder="Mobile Number or Email" />
-        <input type="text" placeholder="Fullname" />
-        <input type="text" placeholder="Username" />
-        <input type="text" placeholder="Password" />
+        <input
+          v-model="user.email"
+          type="text"
+          placeholder="Mobile Number or Email"
+        />
+        <input v-model="user.fullname" type="text" placeholder="Fullname" />
+        <input v-model="user.username" type="text" placeholder="Username" />
+        <input v-model="user.password" type="text" placeholder="Password" />
         <button disabled @click="func" type="submit">Sign up</button>
       </form>
       <span class="agree__link">
@@ -30,6 +34,16 @@ import AuthFooter from "./ui/AuthFooter.vue";
 export default {
   components: {
     AuthFooter,
+  },
+  data() {
+    return {
+      user: {
+        email: "",
+        fullname: "",
+        username: "",
+        password: "",
+      },
+    };
   },
 };
 </script>
