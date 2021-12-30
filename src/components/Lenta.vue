@@ -1,5 +1,6 @@
 <template>
   <div class="main__content">
+    <stories-bar />
     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus eos ipsa,
     adipisci eveniet, libero blanditiis reprehenderit vero illo, temporibus
     voluptas magnam optio facilis impedit deserunt fuga nostrum? Repellendus,
@@ -99,8 +100,16 @@
 </template>
 
 <script>
-export default {};
+import StoriesBar from "../components/Storiesbar.vue";
+export default {
+  components: {
+    StoriesBar,
+  },
+};
 </script>
 
-<style>
+<style scoped>
+.main__content {
+  width: 65%;
+}
 </style>

@@ -36,8 +36,4 @@ export default {
   justify-content: space-between;
   position: relative;
 }
-.main__content {
-  background-color: red;
-  width: 65%;
-}
 </style>
