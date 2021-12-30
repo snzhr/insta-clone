@@ -44,7 +44,9 @@ export default {
     async login() {
       try {
         const res = await axios.post("http://localhost:3000/login", this.user);
-        console.log(res.data);
+        // console.log(res.data);
+        localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("userId", res.data.user.id);
       } catch (error) {
         console.log(error);
       }

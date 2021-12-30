@@ -27,7 +27,7 @@ img {
   display: block;
   background: black;
   width: 3.6em;
-  border-radius: 1000px;
+  border-radius: 100px;
   margin: auto;
 }
 </style>
