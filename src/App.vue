@@ -1,7 +1,6 @@
 <template>
   <router-view />
 </template>
-
 <style>
 * {
   padding: 0;

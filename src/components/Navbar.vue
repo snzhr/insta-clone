@@ -150,14 +150,37 @@
           </svg>
         </div>
 
-        <div class="icon">us</div>
+        <div class="icon user" @click="showMenu = !showMenu">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+            alt=""
+          />
+          <div v-show="showMenu" class="profile__menu">
+            <p>Profile</p>
+            <p>Saved</p>
+            <p>Settings</p>
+            <p>Switch Accounts</p>
+            <p class="logout__btn" @click="logout">Log Out</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      showMenu: false,
+    };
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -202,5 +225,34 @@ input:focus {
   justify-content: space-between;
   padding: 0 2em 0 4em;
   align-items: center;
+}
+.icon img {
+  width: 25px;
+  border-radius: 50px;
+  display: block;
+}
+.user {
+  position: relative;
+}
+.profile__menu {
+  position: absolute;
+  background-color: white;
+  width: 12em;
+  border-radius: 0.3em;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+  right: 0;
+  top: 2.5em;
+}
+.profile__menu p {
+  width: 100%;
+  font-size: 0.9em;
+  padding: 0.7em;
+  cursor: pointer;
+}
+.profile__menu p:hover {
+  background-color: #fafafa;
+}
+.logout__btn {
+  border-top: 1px solid #dcdcdc;
 }
 </style>

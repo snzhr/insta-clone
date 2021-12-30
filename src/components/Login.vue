@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import AuthFooter from "./ui/AuthFooter.vue";
 export default {
   components: {
@@ -41,15 +40,8 @@ export default {
     };
   },
   methods: {
-    async login() {
-      try {
-        const res = await axios.post("http://localhost:3000/login", this.user);
-        // console.log(res.data);
-        localStorage.setItem("token", res.data.accessToken);
-        localStorage.setItem("userId", res.data.user.id);
-      } catch (error) {
-        console.log(error);
-      }
+    login() {
+      this.$store.dispatch("login", this.user);
     },
   },
 };
