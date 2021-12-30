@@ -5,16 +5,16 @@
       <p>Sign up to see photos and videos from your friends.</p>
       <button>Log in with Facebook</button>
       <span class="or">OR</span>
-      <form @submit.prevent="asd">
+      <form @submit.prevent="register">
         <input
           v-model="user.email"
-          type="text"
+          type="email"
           placeholder="Mobile Number or Email"
         />
         <input v-model="user.fullname" type="text" placeholder="Fullname" />
         <input v-model="user.username" type="text" placeholder="Username" />
-        <input v-model="user.password" type="text" placeholder="Password" />
-        <button disabled @click="func" type="submit">Sign up</button>
+        <input v-model="user.password" type="password" placeholder="Password" />
+        <button type="submit">Sign up</button>
       </form>
       <span class="agree__link">
         By signing up, you agree to our Terms , Data Policy and Cookies Policy .
@@ -22,7 +22,7 @@
     </div>
     <div class="bottom__login__block">
       <span class="login__link"
-        >Have an account? <router-link to="/about">Log in</router-link>
+        >Have an account? <router-link to="/signin">Log in</router-link>
       </span>
     </div>
     <auth-footer />
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import AuthFooter from "./ui/AuthFooter.vue";
 export default {
   components: {
@@ -44,6 +45,25 @@ export default {
         password: "",
       },
     };
+  },
+  methods: {
+    async register() {
+      try {
+        const res = await axios.post(
+          "http://localhost:3000/register",
+          this.user
+        );
+        this.user = {
+          email: "",
+          fullname: "",
+          username: "",
+          password: "",
+        };
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
@@ -115,9 +135,14 @@ export default {
 .bottom__login__block {
   margin-bottom: 1em;
 }
+.login__link {
+  font-size: 0.9em;
+}
+
 .login__link a {
   text-decoration: none;
   color: #3796f6;
+  font-weight: 600;
 }
 button[type="submit"]:disabled {
   opacity: 0.5;

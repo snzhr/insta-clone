@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "email": "sake@gmail.com",
+      "password": "$2a$10$7J/bYQT/zsDIO0fxa/B3JOUWddCuhQCKgcYePeDmIAxzOvBIxxW3m",
+      "fullname": "Sanzhar Zhenishbek uulu",
+      "username": "sancho",
+      "id": 1
+    }
+  ]
+}

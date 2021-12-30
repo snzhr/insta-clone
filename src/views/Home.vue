@@ -1,16 +1,9 @@
 <template>
-  <div class="home">
-    <register />
-  </div>
+  <div class="home">Home</div>
 </template>
 
 <script>
-import firebase from "firebase";
-import Register from "../components/Register.vue";
 export default {
   name: "Home",
-  components: {
-    Register,
-  },
 };
 </script>
