@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <div class="container">
+    <div class="nav__container">
       <div class="logo">
         <img src="../assets/instagram_logo.png" alt="" />
         <input type="text" placeholder="Search" />
@@ -165,8 +165,10 @@ export default {};
   background-color: white;
   border-bottom: 1px solid #dcdcdc;
   padding: 0.6em 0;
+  position: fixed;
+  z-index: 10;
 }
-.container {
+.nav__container {
   display: flex;
   width: 73%;
   margin: 0 auto;
