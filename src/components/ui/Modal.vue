@@ -9,7 +9,7 @@
         <h4 @click="discard">Back</h4>
         <h4>Crop</h4>
         <h4 v-show="!imgReady" @click="expand">Next</h4>
-        <h4 v-show="imgReady" @click="share">Share</h4>
+        <h4 v-show="imgReady" @click="upload">Share</h4>
       </div>
       <div class="modal_inner">
         <div class="modal__img__view">
@@ -48,6 +48,7 @@
         <div v-show="imgReady" class="expand">
           <h4>{{ getUser.username }}</h4>
           <textarea
+            v-model="post.caption"
             placeholder="Write a caption"
             cols="35"
             rows="10"
@@ -59,10 +60,18 @@
 </template>
 
 <script>
+import firebase from "firebase";
+import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      post: {
+        img: null,
+        caption: "",
+        userId: "",
+      },
+      localImgUrl: null,
       imgPreview: null,
       uploaded: false,
       imgReady: false,
@@ -73,19 +82,40 @@ export default {
   },
   methods: {
     readFile(e) {
-      const img = e.target.files[0];
-      this.imgPreview = URL.createObjectURL(img);
+      this.localImgUrl = e.target.files[0];
+      this.imgPreview = URL.createObjectURL(this.localImgUrl);
       this.uploaded = true;
     },
     discard() {
-      this.img = null;
+      this.post.img = null;
       this.uploaded = false;
       this.imgReady = false;
     },
     expand() {
       this.imgReady = true;
     },
-    share() {},
+    async upload() {
+      try {
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const imageRef = storageRef.child(this.localImgUrl.name);
+        await imageRef.put(this.localImgUrl);
+        const imageUrl = await imageRef.getDownloadURL();
+        this.post.img = imageUrl;
+        this.post.userId = this.getUser.id;
+        this.share();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async share() {
+      try {
+        const res = await axios.post(`http://localhost:3000/posts`, this.post);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>

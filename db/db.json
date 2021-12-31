@@ -7,5 +7,13 @@
       "username": "sancho",
       "id": 1
     }
+  ],
+  "posts": [
+    {
+      "img": "https://firebasestorage.googleapis.com/v0/b/vuestagram-1f8ab.appspot.com/o/test.png?alt=media&token=1f3ad8e4-209b-4a30-8ef5-d8aaeb821518",
+      "caption": "afsfassafsf",
+      "userId": 1,
+      "id": 1
+    }
   ]
 }
