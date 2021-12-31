@@ -102,7 +102,7 @@ export default {
       try {
         const storage = firebase.storage();
         const storageRef = storage.ref();
-        const imageRef = storageRef.child(this.localImgUrl.name);
+        const imageRef = storageRef.child(Date.now() + this.localImgUrl.name);
         await imageRef.put(this.localImgUrl);
         const imageUrl = await imageRef.getDownloadURL();
         this.post.img = imageUrl;

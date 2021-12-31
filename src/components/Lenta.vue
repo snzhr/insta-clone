@@ -25,7 +25,7 @@ export default {
     try {
       const res = await axios("http://localhost:3000/posts");
       this.posts = res.data;
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
       console.log(error);
     }

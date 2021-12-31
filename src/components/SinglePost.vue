@@ -103,7 +103,7 @@
       <p class="likes">856 likes</p>
       <div class="caption">
         <p>
-          <span class="caption__username">@account</span>
+          <span class="caption__username">{{ postAuthor.username }}</span>
           {{ post.caption }}
         </p>
         <p class="caption__time">5 hours ago</p>
@@ -133,13 +133,29 @@
 </template>
 
 <script>
+import axios from "axios";
 import ProfileImg from "../components/ui/ProfileImg.vue";
 export default {
   props: {
     post: Object,
   },
+  data() {
+    return {
+      postAuthor: {},
+    };
+  },
   components: {
     ProfileImg,
+  },
+  async created() {
+    try {
+      const response = await axios(
+        `http://localhost:3000/users/${this.post.userId}`
+      );
+      this.postAuthor = response.data;
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
@@ -159,6 +175,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #dcdcdc;
 }
 .post__profile__image {
   display: flex;
@@ -184,6 +201,10 @@ export default {
 }
 .likes {
   margin-bottom: 1em;
+}
+.caption__username {
+  font-size: 0.9em;
+  font-weight: 600;
 }
 .caption__time {
   margin: 0.8em 0;
