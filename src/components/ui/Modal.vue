@@ -87,9 +87,13 @@ export default {
       this.uploaded = true;
     },
     discard() {
-      this.post.img = null;
       this.uploaded = false;
       this.imgReady = false;
+      this.post = {
+        img: null,
+        caption: "",
+        userId: "",
+      };
     },
     expand() {
       this.imgReady = true;
@@ -104,6 +108,7 @@ export default {
         this.post.img = imageUrl;
         this.post.userId = this.getUser.id;
         this.share();
+        this.discard();
       } catch (error) {
         console.log(error);
       }
