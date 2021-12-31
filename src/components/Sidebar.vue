@@ -6,7 +6,7 @@
           src="https://www.kindpng.com/picc/m/722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png"
           alt=""
         />
-        <span>@profile</span>
+        <span>{{ getUser.username }}</span>
       </div>
       <p>switch</p>
     </div>
@@ -32,7 +32,12 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
+};
 </script>
 
 <style scoped>

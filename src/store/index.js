@@ -35,6 +35,11 @@ export default createStore({
         router.push("/signin")
     }
   },
+  getters:{
+    getUser(state){
+      return state.user
+    }
+  },
   modules: {
   },
   plugins: [createPersistedState()],

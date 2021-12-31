@@ -53,14 +53,11 @@
           ></a>
         </div>
 
-        <div class="icon">
+        <div class="icon" @click="addPost, (showModal = !showModal)">
           <svg
-            aria-label="New Post"
-            class="_8-yf5"
             color="#262626"
             fill="#262626"
             height="24"
-            role="img"
             viewBox="0 0 24 24"
             width="24"
           >
@@ -166,18 +163,27 @@
       </div>
     </div>
   </div>
+  <Modal v-show="showModal" @closeModal="showModal = false" />
 </template>
 
 <script>
+import Modal from "./ui/Modal.vue";
 export default {
+  components: {
+    Modal,
+  },
   data() {
     return {
       showMenu: false,
+      showModal: false,
     };
   },
   methods: {
     logout() {
       this.$store.dispatch("logout");
+    },
+    addPost() {
+      // this.$store.dispatch("addPost");
     },
   },
 };
@@ -225,6 +231,9 @@ input:focus {
   justify-content: space-between;
   padding: 0 2em 0 4em;
   align-items: center;
+}
+.icon {
+  cursor: pointer;
 }
 .icon img {
   width: 25px;
