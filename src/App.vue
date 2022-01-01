@@ -1,6 +1,14 @@
 <template>
   <router-view />
 </template>
+<script>
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
+};
+</script>
 <style>
 * {
   padding: 0;
