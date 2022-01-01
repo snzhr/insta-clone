@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import firebase from 'firebase';
+import './axios'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDO_zDM64ImITbDbYB7vTiIw_94H5C1lkY",

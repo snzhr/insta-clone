@@ -6,9 +6,9 @@
           src="https://www.kindpng.com/picc/m/722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png"
           alt=""
         />
-        <span>{{ getUser.username }}</span>
+        <span class="username">{{ getUser.username }}</span>
       </div>
-      <p>switch</p>
+      <p class="profile__btn">switch</p>
     </div>
     <div class="profile__suggestions">
       <div class="suggestions__header">
@@ -16,15 +16,19 @@
         <p>See All</p>
       </div>
       <div class="suggestion__account">
-        <div class="user_profile">
+        <div
+          class="user_profile"
+          v-for="user in suggestionAccounts"
+          :key="user.id"
+        >
           <div class="profile">
             <img
               src="https://www.kindpng.com/picc/m/722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png"
               alt=""
             />
-            <span>@profile</span>
+            <span class="username">{{ user.username }}</span>
           </div>
-          <p>switch</p>
+          <p class="profile__btn" @click="follow(user)">follow</p>
         </div>
       </div>
     </div>
@@ -32,10 +36,39 @@
 </template>
 
 <script>
+import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      suggestionAccounts: [],
+    };
+  },
   computed: {
     ...mapGetters(["getUser"]),
+  },
+  methods: {
+    async follow(user) {
+      try {
+        const res = await axios.post(`/followings`, {
+          userId: this.getUser.id,
+          followedUser: user,
+        });
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  async created() {
+    const currentUserId = this.getUser.id;
+    try {
+      const res = await axios(`/users?id_ne=${currentUserId}`);
+      this.suggestionAccounts = res.data;
+      // console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
@@ -77,5 +110,15 @@ img {
 .suggestions__header p {
   font-size: 0.8em;
   font-weight: 600;
+}
+.username {
+  font-weight: 800;
+  font-size: 0.9em;
+}
+.profile__btn {
+  font-weight: 600;
+  font-size: 0.9em;
+  color: #3796f6;
+  cursor: pointer;
 }
 </style>
