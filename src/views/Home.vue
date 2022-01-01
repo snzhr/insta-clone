@@ -14,12 +14,19 @@
 import Navbar from "../components/Navbar.vue";
 import Sidebar from "../components/Sidebar.vue";
 import Lenta from "../components/Lenta.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {
     Navbar,
     Sidebar,
     Lenta,
+  },
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
+  created() {
+    this.$store.dispatch("getFollowings", this.getUser.id);
   },
 };
 </script>

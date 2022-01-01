@@ -7,6 +7,7 @@ import createPersistedState from "vuex-persistedstate";
 export default createStore({
   state: {
     user:{},
+    userFollowings:[],
     loggedIn: false
   },
   mutations: {
@@ -16,6 +17,9 @@ export default createStore({
     },
     REMOVE_USER(state){
       state.user = {}
+    },
+    SET_FOLLOWINGS(state, payload){
+      state.userFollowings = payload
     }
   },
   actions: {
@@ -29,6 +33,15 @@ export default createStore({
         console.log(error);
       }
     },
+    async getFollowings({commit}, id){
+      try {
+          const res = await axios(`users/${id}/followings`)
+          commit('SET_FOLLOWINGS', res.data)
+          // console.log(res.data);
+      } catch (error) {
+          console.log(error);
+      }
+    },
     logout({commit}) {
         commit('REMOVE_USER')
         localStorage.removeItem("token");
@@ -38,6 +51,9 @@ export default createStore({
   getters:{
     getUser(state){
       return state.user
+    },
+    getFollowings(state){
+      return state.userFollowings
     }
   },
   modules: {

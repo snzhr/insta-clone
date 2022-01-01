@@ -11,6 +11,7 @@
 import StoriesBar from "../components/Storiesbar.vue";
 import SinglePost from "../components/SinglePost.vue";
 import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   components: {
     StoriesBar,
@@ -21,10 +22,19 @@ export default {
       posts: null,
     };
   },
+  computed: {
+    ...mapGetters(["getUser", "getFollowings"]),
+  },
   async created() {
     try {
-      const res = await axios("http://localhost:3000/posts");
+      let query = "";
+      for (const person of this.getFollowings) {
+        query += `userId=${person.followedUser.id}&`;
+      }
+      query = query.slice(0, -1);
+      const res = await axios(`/posts?${query}`);
       this.posts = res.data;
+      console.log(res.data);
     } catch (error) {
       console.log(error);
     }

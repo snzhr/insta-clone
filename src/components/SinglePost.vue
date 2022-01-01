@@ -3,7 +3,7 @@
     <div class="post__header">
       <div class="post__profile__image">
         <profile-img />
-        <p>account</p>
+        <p>{{ postAuthor.username }}</p>
       </div>
       <p class="dots">...</p>
     </div>
