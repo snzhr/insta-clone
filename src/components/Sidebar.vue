@@ -6,7 +6,11 @@
           src="https://www.kindpng.com/picc/m/722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png"
           alt=""
         />
-        <span class="username">{{ getUser.username }}</span>
+        <span
+          @click="$router.push(`/profile/${getUser.username}`)"
+          class="username"
+          >{{ getUser.username }}</span
+        >
       </div>
       <p class="profile__btn">switch</p>
     </div>

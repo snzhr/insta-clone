@@ -1,22 +1,21 @@
 <template>
   <div class="stories">
-    <div class="story">
+    <div class="story" v-for="account in getUser.followings" :key="account.id">
       <profile-img />
-      <span>account</span>
-    </div>
-
-    <div class="story">
-      <profile-img />
-      <span>account</span>
+      <span>{{ account.followedUser.username }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ProfileImg from "../components/ui/ProfileImg.vue";
 export default {
   components: {
     ProfileImg,
+  },
+  computed: {
+    ...mapGetters(["getUser"]),
   },
 };
 </script>

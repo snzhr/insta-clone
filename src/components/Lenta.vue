@@ -23,18 +23,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUser", "getFollowings"]),
+    ...mapGetters(["getUser"]),
   },
   async created() {
     try {
       let query = "";
-      for (const person of this.getFollowings) {
+      for (const person of this.getUser.followings) {
         query += `userId=${person.followedUser.id}&`;
       }
       query = query.slice(0, -1);
       const res = await axios(`/posts?${query}`);
       this.posts = res.data;
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
       console.log(error);
     }
