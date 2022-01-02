@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 .home {
-  padding-top: 6em;
+  padding-top: 5.5em;
   background-color: #fafafa;
 }
 .main {

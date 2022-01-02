@@ -14,7 +14,7 @@ export default {
     } else {
       try {
         const res = await axios(
-          `/users/${this.getUser.id}?_embed=followings&_embed=posts`
+          `/users/${this.getUser.id}?_embed=followings&_embed=posts&_embed=followers`
         );
         this.$store.dispatch("setUser", res.data);
       } catch (error) {

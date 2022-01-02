@@ -50,7 +50,9 @@
             <span
               ><b>{{ getUser.posts.length }}</b> posts</span
             >
-            <span><b>0</b> follower</span>
+            <span>
+              <b>{{ getUser.followers.length }}</b> follower</span
+            >
             <span
               ><b>{{ getUser.followings.length }}</b> following</span
             >

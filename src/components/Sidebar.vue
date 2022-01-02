@@ -30,7 +30,11 @@
               src="https://www.kindpng.com/picc/m/722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png"
               alt=""
             />
-            <span class="username">{{ user.username }}</span>
+            <span
+              @click="$router.push(`/profile/${user.username}`)"
+              class="username"
+              >{{ user.username }}</span
+            >
           </div>
           <p class="profile__btn" @click="follow(user)">follow</p>
         </div>
@@ -58,7 +62,10 @@ export default {
           userId: this.getUser.id,
           followedUser: user,
         });
-        // console.log(res);
+        const resFollower = await axios.post(`/followers`, {
+          userId: user.id,
+          follower: this.getUser,
+        });
       } catch (error) {
         console.log(error);
       }
