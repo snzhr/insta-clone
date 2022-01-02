@@ -3,7 +3,18 @@
     <div class="nav__container">
       <div class="logo">
         <img src="../assets/instagram_logo.png" alt="" />
-        <input type="text" placeholder="Search" />
+        <div class="search">
+          <input
+            @focus="showSearch = true"
+            type="text"
+            @input="search"
+            placeholder="Search"
+          />
+          <span v-show="showSearch" @click="showSearch = false" class="erase"
+            >x</span
+          >
+        </div>
+        <search-block :found="foundItems" v-show="showSearch" />
       </div>
       <div class="navigation__icons">
         <div class="icon">
@@ -167,23 +178,34 @@
 </template>
 
 <script>
+import axios from "axios";
 import Modal from "./ui/Modal.vue";
+import SearchBlock from "./SearchBlock.vue";
 export default {
   components: {
     Modal,
+    SearchBlock,
   },
   data() {
     return {
       showMenu: false,
       showModal: false,
+      showSearch: false,
+      foundItems: [],
     };
   },
   methods: {
     logout() {
       this.$store.dispatch("logout");
     },
-    addPost() {
-      // this.$store.dispatch("addPost");
+    async search(e) {
+      try {
+        const res = await axios(`/users?q=${e.target.value}`);
+        this.foundItems = res.data;
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -209,21 +231,32 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding-right: 1em;
+  position: relative;
 }
 .logo img {
   width: 18%;
 }
+.search {
+  height: 2.2em;
+  position: relative;
+}
 .logo input {
-  height: 90%;
-  width: 45%;
+  height: 100%;
+  width: 20em;
   background-color: #fafafa;
   border: 1px solid #dcdcdc;
   border-radius: 3px;
-  padding: 0 1.7em;
-}
-input:focus {
-  outline: none;
   padding: 0 1em;
+}
+.logo input:focus {
+  outline: none;
+}
+.erase {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  font-size: 0.8em;
+  cursor: pointer;
 }
 .navigation__icons {
   display: flex;

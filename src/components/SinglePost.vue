@@ -3,7 +3,9 @@
     <div class="post__header">
       <div class="post__profile__image">
         <profile-img />
-        <p>{{ postAuthor.username }}</p>
+        <p @click="$router.push(`/user/${postAuthor.id}`)">
+          {{ postAuthor.username }}
+        </p>
       </div>
       <p class="dots">...</p>
     </div>

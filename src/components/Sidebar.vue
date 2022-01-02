@@ -30,11 +30,9 @@
               src="https://www.kindpng.com/picc/m/722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png"
               alt=""
             />
-            <span
-              @click="$router.push(`/profile/${user.username}`)"
-              class="username"
-              >{{ user.username }}</span
-            >
+            <span @click="$router.push(`/user/${user.id}`)" class="username">{{
+              user.username
+            }}</span>
           </div>
           <p class="profile__btn" @click="follow(user)">follow</p>
         </div>
