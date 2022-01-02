@@ -6,7 +6,7 @@ import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
-    user:{},
+    user: "",
     loggedIn: false
   },
   mutations: {
@@ -15,7 +15,7 @@ export default createStore({
       state.loggedIn = true;
     },
     REMOVE_USER(state){
-      state.user = {}
+      state.user = ""
     },
   },
   actions: {
@@ -23,18 +23,15 @@ export default createStore({
       try {
         const res = await axios.post("http://localhost:3000/login", payload);
         localStorage.setItem("token", res.data.accessToken);
+        const userRes = await axios(`/users/${res.data.user.id}?_embed=followings&_embed=posts`)
+        commit('SET_USER', userRes.data) 
         router.push("/")
       } catch (error) {
         console.log(error);
       }
     },
-    async getUser(){
-      try {
-        const userRes = await axios(`/users/${user.id}?_embed=followings&_embed=posts`)
-        commit('SET_USER', userRes.data) 
-      } catch (error) {
-        console.log(error);
-      }
+    async setUser({commit}, payload){
+      commit('SET_USER', payload) 
     },
     logout({commit}) {
         commit('REMOVE_USER')

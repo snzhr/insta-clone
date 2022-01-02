@@ -6,7 +6,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import StoriesBar from "../components/Storiesbar.vue";
 import SinglePost from "../components/SinglePost.vue";
@@ -20,24 +19,35 @@ export default {
   data() {
     return {
       posts: null,
+      userFollowings: [],
     };
   },
   computed: {
     ...mapGetters(["getUser"]),
   },
   async created() {
-    try {
-      let query = "";
-      for (const person of this.getUser.followings) {
-        query += `userId=${person.followedUser.id}&`;
+    const userRes = await axios(`/users/${this.getUser.id}?_embed=followings`);
+    this.userFollowings = userRes.data.followings;
+    this.getPosts();
+  },
+  methods: {
+    async getPosts() {
+      if (this.userFollowings.length === 0) {
+        console.log("User doesn't have followings");
+      } else {
+        try {
+          let query = "";
+          this.userFollowings.forEach((p) => {
+            query += `userId=${p.followedUser.id}&`;
+          });
+          query = query.slice(0, -1);
+          const res = await axios(`/posts?${query}`);
+          this.posts = res.data;
+        } catch (error) {
+          console.log(error);
+        }
       }
-      query = query.slice(0, -1);
-      const res = await axios(`/posts?${query}`);
-      this.posts = res.data;
-      // console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+    },
   },
 };
 </script>

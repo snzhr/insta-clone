@@ -58,7 +58,7 @@ export default {
           userId: this.getUser.id,
           followedUser: user,
         });
-        console.log(res);
+        // console.log(res);
       } catch (error) {
         console.log(error);
       }

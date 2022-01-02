@@ -48,11 +48,11 @@
           </div>
           <div class="account__followers__info">
             <span
-              ><b>{{ userPosts.length }}</b> posts</span
+              ><b>{{ getUser.posts.length }}</b> posts</span
             >
             <span><b>0</b> follower</span>
             <span
-              ><b>{{ userFollowings.length }}</b> following</span
+              ><b>{{ getUser.followings.length }}</b> following</span
             >
           </div>
         </div>
@@ -60,7 +60,7 @@
       <div class="account__posts">
         <div class="user__posts">
           <div
-            v-for="post in userPosts"
+            v-for="post in getUser.posts"
             :key="post.id"
             class="user__post"
             :style="{ backgroundImage: `url(${post.img})` }"
@@ -77,24 +77,8 @@ import { mapGetters } from "vuex";
 import Navbar from "../components/Navbar.vue";
 export default {
   components: { Navbar },
-  data() {
-    return {
-      userPosts: [],
-      userFollowings: [],
-    };
-  },
   computed: {
     ...mapGetters(["getUser"]),
-  },
-  async created() {
-    try {
-      const resPost = await axios(`users/${this.getUser.id}/posts`);
-      this.userPosts = resPost.data;
-      const res = await axios(`users/${this.getUser.id}/followings`);
-      this.userFollowings = res.data;
-    } catch (error) {
-      console.log(error);
-    }
   },
 };
 </script>
