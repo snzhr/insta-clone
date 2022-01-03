@@ -21,7 +21,7 @@ export default createStore({
   actions: {
     async login({commit}, payload) {
       try {
-        const res = await axios.post("http://localhost:3000/login", payload);
+        const res = await axios.post("/login", payload);
         localStorage.setItem("token", res.data.accessToken);
         const userRes = await axios(`/users/${res.data.user.id}?_embed=followings&_embed=posts&_embed=followers`)
         commit('SET_USER', userRes.data) 

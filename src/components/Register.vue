@@ -49,10 +49,7 @@ export default {
   methods: {
     async register() {
       try {
-        const res = await axios.post(
-          "http://localhost:3000/register",
-          this.user
-        );
+        const res = await axios.post("/register", this.user);
         this.user = {
           email: "",
           fullname: "",

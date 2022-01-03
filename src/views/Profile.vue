@@ -6,10 +6,7 @@
     <div class="main">
       <div class="main__top">
         <div class="profile__img">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
-            alt=""
-          />
+          <img :src="getUser.profileImg" alt="" />
         </div>
         <div class="account__info">
           <div class="account__info__username">
@@ -77,6 +74,7 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import Navbar from "../components/Navbar.vue";
+import Modal from "../components/ui/Modal.vue";
 export default {
   components: { Navbar },
   computed: {

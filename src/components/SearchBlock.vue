@@ -25,7 +25,7 @@ export default {
   padding: 1em;
   position: absolute;
   background: white;
-  right: -2.5em;
+  right: 0;
   border: 1px solid #dcdcdc;
   border-radius: 0.4em;
   top: 3em;

@@ -151,9 +151,7 @@ export default {
   },
   async created() {
     try {
-      const response = await axios(
-        `http://localhost:3000/users/${this.post.userId}`
-      );
+      const response = await axios(`/users/${this.post.userId}`);
       this.postAuthor = response.data;
     } catch (error) {
       console.log(error);

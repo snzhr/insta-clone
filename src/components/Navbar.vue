@@ -174,17 +174,21 @@
       </div>
     </div>
   </div>
-  <Modal v-show="showModal" @closeModal="showModal = false" />
+  <modal v-show="showModal" @closeModal="showModal = false">
+    <add-post></add-post>
+  </modal>
 </template>
 
 <script>
 import axios from "axios";
 import Modal from "./ui/Modal.vue";
 import SearchBlock from "./SearchBlock.vue";
+import AddPost from "./AddPost.vue";
 export default {
   components: {
     Modal,
     SearchBlock,
+    AddPost,
   },
   data() {
     return {
@@ -202,7 +206,6 @@ export default {
       try {
         const res = await axios(`/users?q=${e.target.value}`);
         this.foundItems = res.data;
-        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
