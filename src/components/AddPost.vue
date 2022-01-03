@@ -112,7 +112,7 @@ export default {
     },
     async share() {
       try {
-        const res = await axios.post(`http://localhost:3000/posts`, this.post);
+        const res = await axios.post(`/posts`, this.post);
         console.log(res);
       } catch (error) {
         console.log(error);
@@ -122,6 +122,9 @@ export default {
 };
 </script>
 <style scoped>
+.modal__content {
+  height: 60vh;
+}
 input[type="file"] {
   display: none;
 }

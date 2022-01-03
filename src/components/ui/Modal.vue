@@ -1,6 +1,6 @@
 <template>
   <div class="modal__bg">
-    <span class="close" @click="$emit('closeModal'), discard()">X</span>
+    <span class="close" @click="$emit('closeModal')">X</span>
     <div class="modal">
       <slot></slot>
     </div>
@@ -35,7 +35,6 @@ export default {};
 .modal {
   background-color: white;
   border-radius: 10px;
-  height: 60vh;
   margin: auto;
   position: relative;
   text-align: center;

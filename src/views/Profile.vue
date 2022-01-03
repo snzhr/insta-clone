@@ -2,12 +2,21 @@
   <div class="nav">
     <Navbar />
   </div>
+  <modal v-show="showModal" @closeModal="showModal = false">
+    <div class="modal__content">
+      <h3 style="padding: 2em">Change profile photo</h3>
+      <input @change="uploadPhoto" type="file" id="file2" accept="image/*" />
+      <label for="file2">Upload photo</label>
+    </div>
+  </modal>
   <div class="profile__page">
     <div class="main">
       <div class="main__top">
-        <div class="profile__img">
-          <img :src="getUser.profileImg" alt="" />
-        </div>
+        <div
+          class="profile__img"
+          :style="{ backgroundImage: `url(${getUser.profileImg})` }"
+          @click="changeImg"
+        ></div>
         <div class="account__info">
           <div class="account__info__username">
             <p class="account__username">{{ getUser.username }}</p>
@@ -72,18 +81,48 @@
 
 <script>
 import axios from "axios";
+import firebase from "firebase";
 import { mapGetters } from "vuex";
 import Navbar from "../components/Navbar.vue";
 import Modal from "../components/ui/Modal.vue";
 export default {
-  components: { Navbar },
+  components: { Navbar, Modal },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
   computed: {
     ...mapGetters(["getUser"]),
+  },
+  methods: {
+    changeImg() {
+      this.showModal = true;
+    },
+    async uploadPhoto(e) {
+      try {
+        const profileImg = e.target.files[0];
+        const storage = firebase.storage();
+        const storageRef = storage.ref("/profiles");
+        const imageRef = storageRef.child(Date.now() + profileImg.name);
+        await imageRef.put(profileImg);
+        const imageUrl = await imageRef.getDownloadURL();
+        const res = await axios.patch(`/users/${this.getUser.id}`, {
+          profileImg: imageUrl,
+        });
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+input[type="file"] {
+  display: none;
+}
 .profile__page {
   padding-top: 5em;
   background-color: #fafafa;
@@ -101,20 +140,21 @@ export default {
   width: 10em;
   height: 10em;
   border-radius: 1000px;
-  /* padding: 10px; */
   display: flex;
   justify-content: center;
   margin: 0 5em;
+  background-position: center;
+  background-size: cover;
 }
-.has__story {
+/* .has__story {
   background: -webkit-linear-gradient(left top, #d7816a 0%, #bd4f6c 100%);
-}
-.profile__img img {
+} */
+/* .profile__img img {
   display: block;
-  width: 9em;
+  max-width: 9em;
   border-radius: 100px;
   margin: auto;
-}
+} */
 
 .account__username,
 button {
@@ -152,5 +192,14 @@ button {
   height: 40vh;
   background-position: center;
   background-size: cover;
+}
+.modal__content {
+  width: 30vw;
+  height: 30vh;
+}
+label {
+  font-weight: 600;
+  color: #3796f6;
+  cursor: pointer;
 }
 </style>
