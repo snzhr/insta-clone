@@ -2,15 +2,12 @@
   <div class="sidebar">
     <div class="user_profile">
       <div class="profile">
-        <img
-          src="https://www.kindpng.com/picc/m/722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png"
-          alt=""
-        />
-        <span
+        <div
           @click="$router.push(`/profile/${getUser.username}`)"
-          class="username"
-          >{{ getUser.username }}</span
-        >
+          class="profile__img"
+          :style="{ backgroundImage: `url(${getUser.profileImg})` }"
+        ></div>
+        <span class="username">{{ getUser.username }}</span>
       </div>
       <p class="profile__btn">switch</p>
     </div>
@@ -26,13 +23,12 @@
           :key="user.id"
         >
           <div class="profile">
-            <img
-              src="https://www.kindpng.com/picc/m/722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png"
-              alt=""
-            />
-            <span @click="$router.push(`/user/${user.id}`)" class="username">{{
-              user.username
-            }}</span>
+            <div
+              @click="$router.push(`/user/${user.id}`)"
+              class="profile__img"
+              :style="{ backgroundImage: `url(${user.profileImg})` }"
+            ></div>
+            <span class="username">{{ user.username }}</span>
           </div>
           <p class="profile__btn" @click="follow(user)">follow</p>
         </div>
@@ -96,9 +92,13 @@ export default {
   position: fixed;
   right: 14%;
 }
-img {
-  width: 20%;
+.profile__img {
+  width: 4em;
+  height: 4em;
   border-radius: 50px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
 }
 .user_profile {
   display: flex;

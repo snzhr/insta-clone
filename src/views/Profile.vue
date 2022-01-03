@@ -137,24 +137,16 @@ input[type="file"] {
   margin-bottom: 4em;
 }
 .profile__img {
-  width: 10em;
-  height: 10em;
+  width: 9em;
+  height: 9em;
   border-radius: 1000px;
   display: flex;
   justify-content: center;
   margin: 0 5em;
   background-position: center;
   background-size: cover;
+  border: 1px solid #dcdcdc;
 }
-/* .has__story {
-  background: -webkit-linear-gradient(left top, #d7816a 0%, #bd4f6c 100%);
-} */
-/* .profile__img img {
-  display: block;
-  max-width: 9em;
-  border-radius: 100px;
-  margin: auto;
-} */
 
 .account__username,
 button {
