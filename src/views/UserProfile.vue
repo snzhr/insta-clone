@@ -91,24 +91,20 @@ export default {
         console.log(error);
       }
     },
-    // async unfollow(user) {
-    //   try {
-    //     let followerID = null;
-    //     for (const item of this.userFollowers) {
-    //       if (item.follower.id === this.getUser.id) {
-    //         followerID = item.id;
-    //       }
-    //     }
-    //     console.log(followerID);
-    //     // const res = await axios.delete(`/followings?userId=${this.getUser.id}`);
-    //     // const resFollower = await axios.delete(`/followers`, {
-    //     //   userId: user.id,
-    //     //   follower: this.getUser,
-    //     // });
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    async unfollow(user) {
+      try {
+        let followerID = null;
+        for (const item of this.userFollowers) {
+          if (item.follower.id === this.getUser.id) {
+            followerID = item.id;
+          }
+        }
+        const res = await axios.delete(`/followings/${followerID}`);
+        const resFollower = await axios.delete(`/followers/${followerID}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   async created() {
     try {
