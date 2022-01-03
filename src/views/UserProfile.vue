@@ -27,7 +27,7 @@
               s
               v-show="following === true"
             >
-              Message
+              Unfollow
             </button>
             <div class="setting__btn"><span>...</span></div>
           </div>

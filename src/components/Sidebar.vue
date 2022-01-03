@@ -70,10 +70,17 @@ export default {
     },
   },
   async created() {
+    const f = await axios(`/followings?userId=${this.getUser.id}`);
+    const usersForExclude = f.data;
+    let query = "";
+    for (const item of usersForExclude) {
+      query += `&id_ne=${item.followedUser.id}`;
+    }
     const currentUserId = this.getUser.id;
     try {
-      const res = await axios(`/users?id_ne=${currentUserId}`);
+      const res = await axios(`/users?id_ne=${currentUserId}${query}`);
       this.suggestionAccounts = res.data;
+
       // console.log(res);
     } catch (error) {
       console.log(error);
