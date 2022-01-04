@@ -5,15 +5,28 @@
       <p>No recent searches.</p>
     </div>
     <div v-show="found.length > 0" class="found__items">
-      <div class="item" v-for="item in found" :key="item.id">
-        <h4 @click="$router.push(`/user/${item.id}`)">{{ item.username }}</h4>
+      <div
+        @click="$router.push(`/user/${item.id}`)"
+        class="item"
+        v-for="item in found"
+        :key="item.id"
+      >
+        <profile-img
+          class="profile__img"
+          :userImg="item.profileImg"
+        ></profile-img>
+        <p>{{ item.username }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ProfileImg from "./ui/ProfileImg.vue";
 export default {
+  components: {
+    ProfileImg,
+  },
   props: {
     found: Array,
   },
@@ -22,20 +35,44 @@ export default {
 
 <style scoped>
 .search__block {
-  padding: 1em;
   position: absolute;
   background: white;
-  right: 0;
+  right: -3em;
   border: 1px solid #dcdcdc;
   border-radius: 0.4em;
-  top: 3em;
+  top: 2.8em;
   width: 30vw;
   height: 50vh;
+}
+.empty__search {
+  padding: 1em;
 }
 .empty__search p {
   margin-top: 7em;
   text-align: center;
   color: gray;
   font-weight: 600;
+  font-size: 0.9em;
+}
+.found__items {
+  padding: 1em 0;
+}
+.item {
+  display: flex;
+  align-items: center;
+  padding: 0.5em 0.8em;
+  cursor: pointer;
+}
+.item:hover {
+  background-color: #fafafa;
+}
+.profile__img {
+  width: 2.8em;
+  height: 2.8em;
+}
+.item p {
+  font-weight: 600;
+  font-size: 0.9em;
+  margin-left: 0.8em;
 }
 </style>
