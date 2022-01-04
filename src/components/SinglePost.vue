@@ -15,7 +15,8 @@
     <div class="post__body">
       <img :src="post.img" alt="" />
     </div>
-    <div class="post__footer">
+    <post-caption :singlePost="post"></post-caption>
+    <!-- <div class="post__footer">
       <div class="footer__buttons">
         <div class="left__buttons">
           <span
@@ -185,140 +186,142 @@
           Post
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import ProfileImg from "../components/ui/ProfileImg.vue";
+import PostCaption from "../components/PostCaption.vue";
 import { mapGetters } from "vuex";
 export default {
   props: {
     post: Object,
   },
-  data() {
-    return {
-      postComment: "",
-      postLikes: 0,
-      isLiked: null,
-    };
-  },
+  // data() {
+  //   return {
+  //     postComment: "",
+  //     postLikes: 0,
+  //     isLiked: null,
+  //   };
+  // },
   components: {
     ProfileImg,
+    PostCaption,
   },
   computed: {
     ...mapGetters(["getUser"]),
   },
-  watch: {
-    async isLiked(newVal, oldVal) {
-      const res = await axios(`/posts/${this.post.id}`);
-      this.postLikes = res.data.likes;
-    },
-  },
-  async created() {
-    try {
-      const res = await axios(`/posts/${this.post.id}`);
-      this.postLikes = res.data.likes;
-      if (res.data.likedUsers.includes(this.getUser.id)) {
-        this.isLiked = true;
-      } else {
-        this.isLiked = false;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  methods: {
-    async addComment() {
-      try {
-        if (this.postComment !== "") {
-          await axios.post(`/comments`, {
-            text: this.postComment,
-            postId: this.post.id,
-            userId: this.getUser.id,
-            userName: this.getUser.username,
-          });
-          this.postComment = "";
-          console.log("successfully created");
-        } else {
-          console.log("Comment field is empty");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async likePost() {
-      let like = this.postLikes + 1;
-      let likedUsers = this.post.likedUsers;
-      likedUsers.push(this.getUser.id);
-      try {
-        await axios.patch(`/posts/${this.post.id}`, {
-          likes: like,
-          likedUsers: likedUsers,
-        });
-        this.isLiked = true;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async unlikePost() {
-      let unlike = this.postLikes - 1;
-      let likedUsers = this.post.likedUsers;
-      likedUsers.splice(likedUsers.indexOf(this.getUser.id), 1);
-      try {
-        await axios.patch(`/posts/${this.post.id}`, {
-          likes: unlike,
-          likedUsers: likedUsers,
-        });
-        this.isLiked = false;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    timeSince(date) {
-      if (typeof date !== "object") {
-        date = new Date(date);
-      }
+  // watch: {
+  //   async isLiked(newVal, oldVal) {
+  //     const res = await axios(`/posts/${this.post.id}`);
+  //     this.postLikes = res.data.likes;
+  //   },
+  // },
+  // async created() {
+  //   try {
+  //     const res = await axios(`/posts/${this.post.id}`);
+  //     this.postLikes = res.data.likes;
+  //     if (res.data.likedUsers.includes(this.getUser.id)) {
+  //       this.isLiked = true;
+  //     } else {
+  //       this.isLiked = false;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
+  // methods: {
+  //   async addComment() {
+  //     try {
+  //       if (this.postComment !== "") {
+  //         await axios.post(`/comments`, {
+  //           text: this.postComment,
+  //           postId: this.post.id,
+  //           userId: this.getUser.id,
+  //           userName: this.getUser.username,
+  //         });
+  //         this.postComment = "";
+  //         console.log("successfully created");
+  //       } else {
+  //         console.log("Comment field is empty");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+  //   async likePost() {
+  //     let like = this.postLikes + 1;
+  //     let likedUsers = this.post.likedUsers;
+  //     likedUsers.push(this.getUser.id);
+  //     try {
+  //       await axios.patch(`/posts/${this.post.id}`, {
+  //         likes: like,
+  //         likedUsers: likedUsers,
+  //       });
+  //       this.isLiked = true;
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+  //   async unlikePost() {
+  //     let unlike = this.postLikes - 1;
+  //     let likedUsers = this.post.likedUsers;
+  //     likedUsers.splice(likedUsers.indexOf(this.getUser.id), 1);
+  //     try {
+  //       await axios.patch(`/posts/${this.post.id}`, {
+  //         likes: unlike,
+  //         likedUsers: likedUsers,
+  //       });
+  //       this.isLiked = false;
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+  //   timeSince(date) {
+  //     if (typeof date !== "object") {
+  //       date = new Date(date);
+  //     }
 
-      let seconds = Math.floor((new Date() - date) / 1000);
-      let intervalType;
+  //     let seconds = Math.floor((new Date() - date) / 1000);
+  //     let intervalType;
 
-      let interval = Math.floor(seconds / 31536000);
-      if (interval >= 1) {
-        intervalType = "year";
-      } else {
-        interval = Math.floor(seconds / 2592000);
-        if (interval >= 1) {
-          intervalType = "month";
-        } else {
-          interval = Math.floor(seconds / 86400);
-          if (interval >= 1) {
-            intervalType = "day";
-          } else {
-            interval = Math.floor(seconds / 3600);
-            if (interval >= 1) {
-              intervalType = "hour";
-            } else {
-              interval = Math.floor(seconds / 60);
-              if (interval >= 1) {
-                intervalType = "minute";
-              } else {
-                interval = seconds;
-                intervalType = "second";
-              }
-            }
-          }
-        }
-      }
-      if (interval > 1 || interval === 0) {
-        intervalType += "s ago";
-      } else {
-        intervalType += " ago";
-      }
-      return interval + " " + intervalType;
-    },
-  },
+  //     let interval = Math.floor(seconds / 31536000);
+  //     if (interval >= 1) {
+  //       intervalType = "year";
+  //     } else {
+  //       interval = Math.floor(seconds / 2592000);
+  //       if (interval >= 1) {
+  //         intervalType = "month";
+  //       } else {
+  //         interval = Math.floor(seconds / 86400);
+  //         if (interval >= 1) {
+  //           intervalType = "day";
+  //         } else {
+  //           interval = Math.floor(seconds / 3600);
+  //           if (interval >= 1) {
+  //             intervalType = "hour";
+  //           } else {
+  //             interval = Math.floor(seconds / 60);
+  //             if (interval >= 1) {
+  //               intervalType = "minute";
+  //             } else {
+  //               interval = seconds;
+  //               intervalType = "second";
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //     if (interval > 1 || interval === 0) {
+  //       intervalType += "s ago";
+  //     } else {
+  //       intervalType += " ago";
+  //     }
+  //     return interval + " " + intervalType;
+  //   },
+  // },
 };
 </script>
 
@@ -355,7 +358,7 @@ export default {
   font-size: 1.5em;
   cursor: pointer;
 }
-.post__footer {
+/* .post__footer {
   padding: 1em;
 }
 .footer__buttons {
@@ -412,5 +415,5 @@ button:disabled {
 }
 .like__btn {
   cursor: pointer;
-}
+} */
 </style>

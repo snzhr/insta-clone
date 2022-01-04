@@ -21,15 +21,20 @@
         >Don't have an account? <router-link to="/signup">Sign up</router-link>
       </span>
     </div>
-    <auth-footer />
+    <auth-footer>
+      <p style="text-align: center">Get the app.</p>
+      <app-icons></app-icons>
+    </auth-footer>
   </div>
 </template>
 
 <script>
 import AuthFooter from "./ui/AuthFooter.vue";
+import AppIcons from "./ui/AppIcons.vue";
 export default {
   components: {
     AuthFooter,
+    AppIcons,
   },
   data() {
     return {

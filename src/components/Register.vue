@@ -25,16 +25,21 @@
         >Have an account? <router-link to="/signin">Log in</router-link>
       </span>
     </div>
-    <auth-footer />
+    <auth-footer>
+      <p style="text-align: center">Get the app.</p>
+      <app-icons></app-icons>
+    </auth-footer>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import AuthFooter from "./ui/AuthFooter.vue";
+import AppIcons from "./ui/AppIcons.vue";
 export default {
   components: {
     AuthFooter,
+    AppIcons,
   },
   data() {
     return {
@@ -43,6 +48,8 @@ export default {
         fullname: "",
         username: "",
         password: "",
+        profileImg:
+          "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
       },
     };
   },
@@ -56,7 +63,7 @@ export default {
           username: "",
           password: "",
         };
-        console.log(res.data);
+        this.$router.push("/signin");
       } catch (error) {
         console.log(error);
       }

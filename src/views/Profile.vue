@@ -69,15 +69,62 @@
         </div>
       </div>
       <div class="account__posts">
-        <div class="user__posts">
+        <div v-if="getUser.posts.length === 0" class="empty__posts">
+          <img
+            src="https://www.instagram.com/static/images/mediaUpsell.jpg/6efc710a1d5a.jpg"
+            alt=""
+          />
+          <div class="empty__text">
+            <h3>Start capturing and sharing your moments.</h3>
+            <p>Get the app to share your first photo or video.</p>
+            <app-icons></app-icons>
+          </div>
+        </div>
+
+        <div v-else class="user__posts">
           <div
+            @click="select(post)"
             v-for="post in getUser.posts"
             :key="post.id"
             class="user__post"
-            :style="{ backgroundImage: `url(${post.img})` }"
+            :style="{
+              backgroundImage: `url(${post.img})`,
+            }"
           ></div>
+          <modal v-show="showPostPreview" @closeModal="showPostPreview = false">
+            <div class="post__preview">
+              <div class="img__view">
+                <img :src="currentPost.img" :alt="currentPost.id" />
+              </div>
+              <div class="img__details">
+                <div class="details__header">
+                  <div
+                    class="details__username"
+                    style="display: flex; align-items: center"
+                  >
+                    <profile-img
+                      style="width: 2em; height: 2em"
+                      :userImg="getUser.profileImg"
+                    ></profile-img>
+                    <span
+                      style="
+                        margin-left: 0.5em;
+                        font-weight: 600;
+                        font-size: 0.9em;
+                      "
+                      >{{ getUser.username }}</span
+                    >
+                  </div>
+                  <p style="font-size: 1.5em; cursor: pointer">...</p>
+                </div>
+                <div class="details__body">Details</div>
+                <div class="comment__section"></div>
+              </div>
+            </div>
+          </modal>
         </div>
       </div>
+      <auth-footer></auth-footer>
     </div>
   </div>
 </template>
@@ -89,17 +136,25 @@ import { mapGetters } from "vuex";
 import Navbar from "../components/Navbar.vue";
 import Modal from "../components/ui/Modal.vue";
 import ProfileImg from "../components/ui/ProfileImg.vue";
+import AuthFooter from "../components/ui/AuthFooter.vue";
+import AppIcons from "../components/ui/AppIcons.vue";
 export default {
-  components: { Navbar, Modal, ProfileImg },
+  components: { Navbar, Modal, ProfileImg, AuthFooter, AppIcons },
   data() {
     return {
       showModal: false,
+      showPostPreview: false,
+      currentPost: "",
     };
   },
   computed: {
     ...mapGetters(["getUser"]),
   },
   methods: {
+    select(post) {
+      this.currentPost = post;
+      this.showPostPreview = true;
+    },
     changeImg() {
       this.showModal = true;
     },
@@ -135,6 +190,53 @@ export default {
 </script>
 
 <style scoped>
+.details__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #dcdcdc;
+  padding: 1em;
+}
+.post__preview {
+  display: flex;
+  width: 80vw;
+  height: 90vh;
+}
+.img__details {
+  width: 50%;
+}
+.img__view {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #dcdcdc;
+}
+.details__body {
+  /* background-color: aqua; */
+  height: 60%;
+  border-bottom: 1px solid #dcdcdc;
+}
+.img__view img {
+  width: 100%;
+}
+.empty__posts {
+  display: flex;
+  background-color: white;
+  border-radius: 3px;
+}
+.empty__posts img {
+  width: 30vw;
+  display: block;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.empty__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+}
 input[type="file"] {
   display: none;
 }
@@ -195,6 +297,7 @@ button {
   height: 40vh;
   background-position: center;
   background-size: cover;
+  cursor: pointer;
 }
 .modal__content {
   width: 30vw;

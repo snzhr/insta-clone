@@ -16,8 +16,9 @@ export default {};
   background-color: rgba(0, 0, 0, 0.85);
   position: fixed;
   height: 100%;
-  width: 100%;
+  width: 100vw;
   z-index: 100;
+  inset: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -26,8 +27,8 @@ export default {};
 .close {
   color: white;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 40px;
   font-size: 2em;
   cursor: pointer;
 }
