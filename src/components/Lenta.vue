@@ -41,7 +41,7 @@ export default {
             query += `userId=${p.followedUser.id}&`;
           });
           query = query.slice(0, -1);
-          const res = await axios(`/posts?${query}`);
+          const res = await axios(`/posts?_sort=id&_order=desc&${query}`);
           this.posts = res.data;
         } catch (error) {
           console.log(error);

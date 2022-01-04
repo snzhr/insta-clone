@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { mapGetters } from "vuex";
 import ProfileImg from "../components/ui/ProfileImg.vue";
 export default {
