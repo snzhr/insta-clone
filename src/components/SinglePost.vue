@@ -4,10 +4,10 @@
       <div class="post__profile__image">
         <profile-img
           class="profile__img"
-          :userImg="postAuthor.profileImg"
+          :userImg="post.user.profileImg"
         ></profile-img>
-        <p @click="$router.push(`/user/${postAuthor.id}`)">
-          {{ postAuthor.username }}
+        <p @click="$router.push(`/user/${post.user.id}`)">
+          {{ post.user.username }}
         </p>
       </div>
       <p class="dots">...</p>
@@ -108,9 +108,23 @@
       <p class="likes">856 likes</p>
       <div class="caption">
         <p>
-          <span class="caption__username">{{ postAuthor.username }}</span>
-          {{ post.caption }}
+          <span
+            class="caption__username"
+            @click="$router.push(`/user/${post.user.id}`)"
+            >{{ post.user.username }}
+          </span>
+          <span class="caption__text"> {{ post.caption }} </span>
         </p>
+        <div class="comments">
+          <p class="comment" v-for="comment in post.comments" :key="comment.id">
+            <span
+              @click="$router.push(`/user/${comment.userId}`)"
+              class="caption__username"
+              >{{ comment.userName }}</span
+            >
+            <span class="caption__text">{{ comment.text }}</span>
+          </p>
+        </div>
         <p class="caption__time">5 hours ago</p>
       </div>
       <div class="caption__add__comment">
@@ -130,8 +144,12 @@
             ></path>
           </svg>
         </div>
-        <input type="text" placeholder="Add a comment..." />
-        <p class="add__comment__btn">Post</p>
+        <input
+          v-model="postComment"
+          type="text"
+          placeholder="Add a comment..."
+        />
+        <p class="add__comment__btn" @click="addComment">Post</p>
       </div>
     </div>
   </div>
@@ -140,25 +158,41 @@
 <script>
 import axios from "axios";
 import ProfileImg from "../components/ui/ProfileImg.vue";
+import { mapGetters } from "vuex";
 export default {
   props: {
     post: Object,
   },
   data() {
     return {
-      postAuthor: {},
+      postComment: "",
     };
   },
   components: {
     ProfileImg,
   },
-  async created() {
-    try {
-      const response = await axios(`/users/${this.post.userId}`);
-      this.postAuthor = response.data;
-    } catch (error) {
-      console.log(error);
-    }
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
+  methods: {
+    async addComment() {
+      try {
+        if (this.postComment !== "") {
+          await axios.post(`/comments`, {
+            text: this.postComment,
+            postId: this.post.id,
+            userId: this.getUser.id,
+            userName: this.getUser.username,
+          });
+          this.postComment = "";
+          console.log("successfully created");
+        } else {
+          console.log("Comment field is empty");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
@@ -213,12 +247,20 @@ export default {
 .caption__username {
   font-size: 0.9em;
   font-weight: 600;
+  cursor: pointer;
 }
 .caption__time {
   margin: 0.8em 0;
   font-size: 0.7em;
   text-transform: uppercase;
   color: gray;
+}
+.caption__text {
+  font-size: 0.9em;
+  margin-left: 0.5em;
+}
+.comments {
+  margin-top: 0.5em;
 }
 .caption__add__comment {
   display: flex;
