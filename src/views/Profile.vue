@@ -4,9 +4,12 @@
   </div>
   <modal v-show="showModal" @closeModal="showModal = false">
     <div class="modal__content">
-      <h3 style="padding: 2em">Change profile photo</h3>
-      <input @change="uploadPhoto" type="file" id="file2" accept="image/*" />
-      <label for="file2">Upload photo</label>
+      <h3 style="padding: 1.5em">Change profile photo</h3>
+      <div class="img__input">
+        <input @change="uploadPhoto" type="file" id="file2" accept="image/*" />
+        <label for="file2">Upload photo</label>
+      </div>
+      <p @click="removePhoto">Remove current photo</p>
     </div>
   </modal>
   <div class="profile__page">
@@ -116,6 +119,17 @@ export default {
         console.log(error);
       }
     },
+    async removePhoto() {
+      try {
+        const res = await axios.patch(`/users/${this.getUser.id}`, {
+          profileImg:
+            "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+        });
+        console.log("removed successfully");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
@@ -186,9 +200,23 @@ button {
   width: 30vw;
   height: 30vh;
 }
+.modal__content > * {
+  border-bottom: 1px solid #dcdcdc;
+}
 label {
   font-weight: 600;
   color: #3796f6;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+.img__input {
+  padding: 1em;
+}
+.modal__content p {
+  color: firebrick;
+  font-weight: 600;
+  font-size: 0.9em;
+  padding: 1em;
   cursor: pointer;
 }
 </style>

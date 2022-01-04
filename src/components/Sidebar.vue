@@ -111,6 +111,7 @@ export default {
 .profile {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .profile span {
   margin-left: 1em;

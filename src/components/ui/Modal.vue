@@ -20,6 +20,8 @@ export default {};
   z-index: 100;
   overflow: hidden;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .close {
   color: white;
@@ -35,7 +37,6 @@ export default {};
 .modal {
   background-color: white;
   border-radius: 10px;
-  margin: auto;
   position: relative;
   text-align: center;
   overflow: scroll;
