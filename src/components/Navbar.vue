@@ -168,7 +168,13 @@
             :userImg="$store.getters.getUser.profileImg"
           ></profile-img>
           <div v-show="showMenu" class="profile__menu">
-            <p>Profile</p>
+            <p
+              @click="
+                $router.push(`/profile/${$store.getters.getUser.username}`)
+              "
+            >
+              Profile
+            </p>
             <p>Saved</p>
             <p>Settings</p>
             <p>Switch Accounts</p>

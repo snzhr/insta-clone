@@ -11,7 +11,7 @@
         ></profile-img>
         <span class="username">{{ getUser.username }}</span>
       </div>
-      <p class="profile__btn">switch</p>
+      <p class="profile__btn">Switch</p>
     </div>
     <div class="profile__suggestions">
       <div class="suggestions__header">
@@ -31,7 +31,7 @@
             ></profile-img>
             <span class="username">{{ user.username }}</span>
           </div>
-          <p class="profile__btn" @click="follow(user)">follow</p>
+          <p class="profile__btn" @click="follow(user)">Follow</p>
         </div>
       </div>
     </div>
@@ -98,14 +98,15 @@ export default {
   right: 14%;
 }
 .profile__img {
-  width: 4em;
-  height: 4em;
+  width: 3.5em;
+  height: 3.5em;
 }
 .user_profile {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5em;
+  margin-top: 1.2em;
 }
 .profile {
   display: flex;
@@ -134,7 +135,7 @@ export default {
 }
 .profile__btn {
   font-weight: 600;
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #3796f6;
   cursor: pointer;
 }

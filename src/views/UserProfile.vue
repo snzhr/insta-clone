@@ -5,10 +5,10 @@
   <div class="profile__page">
     <div class="main">
       <div class="main__top">
-        <div
+        <profile-img
+          :userImg="user.profileImg"
           class="profile__img"
-          :style="{ backgroundImage: `url(${user.profileImg})` }"
-        ></div>
+        ></profile-img>
         <div class="account__info">
           <div class="account__info__username">
             <p class="account__username">{{ user.username }}</p>
@@ -59,9 +59,10 @@
 <script>
 import axios from "axios";
 import Navbar from "../components/Navbar.vue";
+import ProfileImg from "../components/ui/ProfileImg.vue";
 import { mapGetters } from "vuex";
 export default {
-  components: { Navbar },
+  components: { Navbar, ProfileImg },
   data() {
     return {
       user: "",

@@ -10,7 +10,7 @@ export default {
 </script>
 <style scoped>
 .userimg {
-  border-radius: 50px;
+  border-radius: 150px;
   background-size: cover;
   background-position: center;
   cursor: pointer;

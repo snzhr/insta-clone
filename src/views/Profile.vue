@@ -12,11 +12,11 @@
   <div class="profile__page">
     <div class="main">
       <div class="main__top">
-        <div
-          class="profile__img"
-          :style="{ backgroundImage: `url(${getUser.profileImg})` }"
+        <profile-img
           @click="changeImg"
-        ></div>
+          class="profile__img"
+          :userImg="getUser.profileImg"
+        ></profile-img>
         <div class="account__info">
           <div class="account__info__username">
             <p class="account__username">{{ getUser.username }}</p>
@@ -85,8 +85,9 @@ import firebase from "firebase";
 import { mapGetters } from "vuex";
 import Navbar from "../components/Navbar.vue";
 import Modal from "../components/ui/Modal.vue";
+import ProfileImg from "../components/ui/ProfileImg.vue";
 export default {
-  components: { Navbar, Modal },
+  components: { Navbar, Modal, ProfileImg },
   data() {
     return {
       showModal: false,
@@ -139,14 +140,9 @@ input[type="file"] {
 .profile__img {
   width: 9em;
   height: 9em;
-  border-radius: 1000px;
   display: flex;
   justify-content: center;
   margin: 0 5em;
-  background-position: center;
-  background-size: cover;
-  border: 1px solid #dcdcdc;
-  cursor: pointer;
 }
 
 .account__username,

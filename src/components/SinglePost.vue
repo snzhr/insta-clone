@@ -2,7 +2,10 @@
   <div class="post">
     <div class="post__header">
       <div class="post__profile__image">
-        <profile-img />
+        <profile-img
+          class="profile__img"
+          :userImg="postAuthor.profileImg"
+        ></profile-img>
         <p @click="$router.push(`/user/${postAuthor.id}`)">
           {{ postAuthor.username }}
         </p>
@@ -182,7 +185,12 @@ export default {
   align-items: center;
 }
 .post__profile__image p {
-  margin-left: 1em;
+  margin-left: 0.8em;
+  cursor: pointer;
+}
+.profile__img {
+  width: 3em;
+  height: 3em;
 }
 .dots {
   font-size: 1.5em;
