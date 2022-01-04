@@ -116,7 +116,16 @@
           <span class="caption__text"> {{ post.caption }} </span>
         </p>
         <div class="comments">
-          <p class="comment" v-for="comment in post.comments" :key="comment.id">
+          <span
+            style="font-size: 0.9em; color: gray; cursor: pointer"
+            v-if="post.comments.length >= 2"
+            >View all {{ post.comments.length }} comments</span
+          >
+          <p
+            class="comment"
+            v-for="comment in post.comments.slice(0, 2)"
+            :key="comment.id"
+          >
             <span
               @click="$router.push(`/user/${comment.userId}`)"
               class="caption__username"
@@ -149,7 +158,13 @@
           type="text"
           placeholder="Add a comment..."
         />
-        <p class="add__comment__btn" @click="addComment">Post</p>
+        <button
+          class="add__comment__btn"
+          :disabled="postComment === ''"
+          @click="addComment"
+        >
+          Post
+        </button>
       </div>
     </div>
   </div>
@@ -260,7 +275,7 @@ export default {
   margin-left: 0.5em;
 }
 .comments {
-  margin-top: 0.5em;
+  margin-top: 0.3em;
 }
 .caption__add__comment {
   display: flex;
@@ -276,5 +291,13 @@ export default {
 .add__comment__btn {
   color: #3796f6;
   font-weight: 600;
+  font-size: 0.9em;
+  cursor: pointer;
+  border: none;
+  display: block;
+  background-color: transparent;
+}
+button:disabled {
+  opacity: 0.5;
 }
 </style>

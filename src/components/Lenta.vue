@@ -42,7 +42,6 @@ export default {
           });
           query = query.slice(0, -1);
           const res = await axios(`/posts?${query}`);
-          console.log(res.data);
           this.posts = res.data;
         } catch (error) {
           console.log(error);
