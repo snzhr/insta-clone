@@ -67,6 +67,8 @@ export default {
         img: null,
         caption: "",
         userId: "",
+        likes: 0,
+        createdAt: Date.now(),
       },
       localImgUrl: null,
       imgPreview: null,
