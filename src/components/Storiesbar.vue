@@ -1,6 +1,6 @@
 <template>
   <div class="stories">
-    <div class="story" v-for="account in getUser.followings" :key="account.id">
+    <div class="story" v-for="account in userFollowings" :key="account.id">
       <profile-img
         class="profile__img"
         :userImg="account.followedUser.profileImg"
@@ -12,14 +12,24 @@
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
 import ProfileImg from "../components/ui/ProfileImg.vue";
 export default {
   components: {
     ProfileImg,
   },
-  computed: {
-    ...mapGetters(["getUser"]),
+  data() {
+    return {
+      userFollowings: [],
+    };
+  },
+  async created() {
+    try {
+      const userId = this.$store.getters.getUser.id;
+      const res = await axios(`/users/${userId}?_embed=followings`);
+      this.userFollowings = res.data.followings;
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>

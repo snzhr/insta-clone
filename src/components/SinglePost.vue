@@ -201,7 +201,7 @@ export default {
     return {
       postComment: "",
       postLikes: 0,
-      isLiked: false,
+      isLiked: null,
     };
   },
   components: {
@@ -220,6 +220,11 @@ export default {
     try {
       const res = await axios(`/posts/${this.post.id}`);
       this.postLikes = res.data.likes;
+      if (res.data.likedUsers.includes(this.getUser.id)) {
+        this.isLiked = true;
+      } else {
+        this.isLiked = false;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -261,7 +266,6 @@ export default {
       let unlike = this.postLikes - 1;
       let likedUsers = this.post.likedUsers;
       likedUsers.splice(likedUsers.indexOf(this.getUser.id), 1);
-      console.log(unlike);
       try {
         await axios.patch(`/posts/${this.post.id}`, {
           likes: unlike,
