@@ -123,7 +123,7 @@
         </div>
       </div>
       <p class="likes">
-        {{ post.likes }} {{ post.likes == 1 ? "like" : "likes" }}
+        {{ postLikes }} {{ postLikes == 1 ? "like" : "likes" }}
       </p>
       <div class="caption">
         <p>
@@ -200,6 +200,8 @@ export default {
   data() {
     return {
       postComment: "",
+      postLikes: 0,
+      isLiked: false,
     };
   },
   components: {
@@ -207,6 +209,20 @@ export default {
   },
   computed: {
     ...mapGetters(["getUser"]),
+  },
+  watch: {
+    async isLiked(newVal, oldVal) {
+      const res = await axios(`/posts/${this.post.id}`);
+      this.postLikes = res.data.likes;
+    },
+  },
+  async created() {
+    try {
+      const res = await axios(`/posts/${this.post.id}`);
+      this.postLikes = res.data.likes;
+    } catch (error) {
+      console.log(error);
+    }
   },
   methods: {
     async addComment() {
@@ -228,7 +244,7 @@ export default {
       }
     },
     async likePost() {
-      let like = this.post.likes + 1;
+      let like = this.postLikes + 1;
       let likedUsers = this.post.likedUsers;
       likedUsers.push(this.getUser.id);
       try {
@@ -236,20 +252,22 @@ export default {
           likes: like,
           likedUsers: likedUsers,
         });
+        this.isLiked = true;
       } catch (error) {
         console.log(error);
       }
     },
     async unlikePost() {
-      let like = this.post.likes - 1;
+      let unlike = this.postLikes - 1;
       let likedUsers = this.post.likedUsers;
       likedUsers.splice(likedUsers.indexOf(this.getUser.id), 1);
-      // console.log(likedUsers);
+      console.log(unlike);
       try {
         await axios.patch(`/posts/${this.post.id}`, {
-          likes: like,
+          likes: unlike,
           likedUsers: likedUsers,
         });
+        this.isLiked = false;
       } catch (error) {
         console.log(error);
       }
