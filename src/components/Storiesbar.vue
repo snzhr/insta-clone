@@ -1,7 +1,10 @@
 <template>
   <div class="stories">
     <div class="story" v-for="account in getUser.followings" :key="account.id">
-      <profile-img />
+      <profile-img
+        class="profile__img"
+        :userImg="account.followedUser.profileImg"
+      ></profile-img>
       <span>{{ account.followedUser.username }}</span>
     </div>
   </div>
@@ -21,6 +24,10 @@ export default {
 </script>
 
 <style scoped>
+.profile__img {
+  width: 4em;
+  height: 4em;
+}
 .stories {
   display: flex;
   justify-content: flex-start;
@@ -32,6 +39,7 @@ export default {
 }
 .story span {
   font-size: 0.8em;
+  margin-top: 0.5em;
 }
 .story {
   width: 4em;

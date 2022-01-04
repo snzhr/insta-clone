@@ -1,12 +1,14 @@
 <template>
   <div class="sidebar">
     <div class="user_profile">
-      <div class="profile">
-        <div
-          @click="$router.push(`/profile/${getUser.username}`)"
+      <div
+        @click="$router.push(`/profile/${getUser.username}`)"
+        class="profile"
+      >
+        <profile-img
           class="profile__img"
-          :style="{ backgroundImage: `url(${getUser.profileImg})` }"
-        ></div>
+          :userImg="getUser.profileImg"
+        ></profile-img>
         <span class="username">{{ getUser.username }}</span>
       </div>
       <p class="profile__btn">switch</p>
@@ -22,12 +24,11 @@
           v-for="user in suggestionAccounts"
           :key="user.id"
         >
-          <div class="profile">
-            <div
-              @click="$router.push(`/user/${user.id}`)"
+          <div @click="$router.push(`/user/${user.id}`)" class="profile">
+            <profile-img
               class="profile__img"
-              :style="{ backgroundImage: `url(${user.profileImg})` }"
-            ></div>
+              :userImg="user.profileImg"
+            ></profile-img>
             <span class="username">{{ user.username }}</span>
           </div>
           <p class="profile__btn" @click="follow(user)">follow</p>
@@ -40,7 +41,11 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import ProfileImg from "./ui/ProfileImg.vue";
 export default {
+  components: {
+    ProfileImg,
+  },
   data() {
     return {
       suggestionAccounts: [],
@@ -95,10 +100,6 @@ export default {
 .profile__img {
   width: 4em;
   height: 4em;
-  border-radius: 50px;
-  background-size: cover;
-  background-position: center;
-  cursor: pointer;
 }
 .user_profile {
   display: flex;

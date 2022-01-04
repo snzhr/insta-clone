@@ -2,7 +2,11 @@
   <div class="navbar">
     <div class="nav__container">
       <div class="logo">
-        <img src="../assets/instagram_logo.png" alt="" />
+        <img
+          @click="$router.push('/')"
+          src="../assets/instalogo.png"
+          alt="logo"
+        />
         <div class="search">
           <input
             @focus="showSearch = true"
@@ -38,7 +42,7 @@
           <a
             aria-label="Direct messaging - 0 new notifications link"
             class="xWeGp"
-            href="/direct/inbox/"
+            href="/"
             tabindex="0"
             ><svg
               aria-label="Messenger"
@@ -159,10 +163,10 @@
         </div>
 
         <div class="icon user" @click="showMenu = !showMenu">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
-            alt=""
-          />
+          <profile-img
+            class="icon__user__img"
+            :userImg="$store.getters.getUser.profileImg"
+          ></profile-img>
           <div v-show="showMenu" class="profile__menu">
             <p>Profile</p>
             <p>Saved</p>
@@ -182,6 +186,7 @@
 <script>
 import axios from "axios";
 import Modal from "./ui/Modal.vue";
+import ProfileImg from "./ui/ProfileImg.vue";
 import SearchBlock from "./SearchBlock.vue";
 import AddPost from "./AddPost.vue";
 export default {
@@ -189,6 +194,7 @@ export default {
     Modal,
     SearchBlock,
     AddPost,
+    ProfileImg,
   },
   data() {
     return {
@@ -238,6 +244,7 @@ export default {
 }
 .logo img {
   width: 18%;
+  cursor: pointer;
 }
 .search {
   height: 2.2em;
@@ -271,10 +278,13 @@ export default {
 .icon {
   cursor: pointer;
 }
-.icon img {
-  width: 25px;
+.icon__user__img {
+  width: 1.5em;
+  height: 1.5em;
   border-radius: 50px;
-  display: block;
+  border: 1px solid #dcdcdc;
+  background-size: cover;
+  background-position: center;
 }
 .user {
   position: relative;

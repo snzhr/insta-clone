@@ -1,33 +1,19 @@
 <template>
-  <div class="profile__img has__story">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
-      alt=""
-    />
-  </div>
+  <div class="userimg" :style="{ backgroundImage: `url(${userImg})` }"></div>
 </template>
-
 <script>
-export default {};
+export default {
+  props: {
+    userImg: String,
+  },
+};
 </script>
-
 <style scoped>
-.profile__img {
-  width: 4em;
-  height: 4em;
-  border-radius: 1000px;
-  /* padding: 10px; */
-  display: flex;
-  justify-content: center;
-}
-.has__story {
-  background: -webkit-linear-gradient(left top, #d7816a 0%, #bd4f6c 100%);
-}
-img {
-  display: block;
-  background: black;
-  width: 3.6em;
-  border-radius: 100px;
-  margin: auto;
+.userimg {
+  border-radius: 50px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  border: 1px solid #dcdcdc;
 }
 </style>

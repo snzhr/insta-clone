@@ -146,6 +146,7 @@ input[type="file"] {
   background-position: center;
   background-size: cover;
   border: 1px solid #dcdcdc;
+  cursor: pointer;
 }
 
 .account__username,
