@@ -23,7 +23,7 @@
         <div class="account__info">
           <div class="account__info__username">
             <p class="account__username">{{ getUser.username }}</p>
-            <button>Edit profile</button>
+            <button @click="$router.push('/profile/edit')">Edit profile</button>
             <div class="setting__btn">
               <svg
                 aria-label="Options"
@@ -261,6 +261,7 @@ button {
   padding: 0.5em;
   border-radius: 5px;
   background-color: transparent;
+  cursor: pointer;
 }
 .account__info__username {
   display: flex;
