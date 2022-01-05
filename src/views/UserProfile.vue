@@ -40,6 +40,13 @@
               ><b>{{ userFollowings.length }}</b> following</span
             >
           </div>
+          <div class="account_more__info">
+            <h4>{{ user.name }}</h4>
+            <p class="user__bio">{{ user.bio }}</p>
+            <p>
+              <a :href="user.website" target="_blank">{{ user.website }}</a>
+            </p>
+          </div>
         </div>
       </div>
       <div class="account__posts">
@@ -161,13 +168,15 @@ export default {
     this.$watch(
       () => this.$route.params,
       async (toParams, previousParams) => {
-        const res = await axios(
-          `/users/${this.$route.params.id}?_embed=followings&_embed=posts&_embed=followers`
-        );
-        this.user = res.data;
-        this.userPosts = res.data.posts;
-        this.userFollowings = res.data.followings;
-        this.userFollowers = res.data.followers;
+        if (Object.values(this.$route.params).length !== 0) {
+          const res = await axios(
+            `/users/${this.$route.params.id}?_embed=followings&_embed=posts&_embed=followers`
+          );
+          this.user = res.data;
+          this.userPosts = res.data.posts;
+          this.userFollowings = res.data.followings;
+          this.userFollowers = res.data.followers;
+        }
       }
     );
   },
@@ -185,20 +194,16 @@ export default {
 }
 .main__top {
   display: flex;
-  width: fit-content;
   margin-bottom: 4em;
 }
 .profile__img {
   width: 9em;
   height: 9em;
-  border-radius: 1000px;
   display: flex;
   justify-content: center;
   margin: 0 5em;
-  background-position: center;
-  background-size: cover;
-  border: 1px solid #dcdcdc;
 }
+/* .account__info {} */
 .account__username,
 button {
   margin-right: 1em;
@@ -251,5 +256,16 @@ button {
   height: 40vh;
   background-position: center;
   background-size: cover;
+}
+.account_more__info {
+  margin-top: 1em;
+}
+.account_more__info > * {
+  margin-bottom: 0.5em;
+}
+.account_more__info p a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #12377c;
 }
 </style>

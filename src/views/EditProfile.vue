@@ -82,7 +82,7 @@
                 placeholder="Gender"
               />
             </div>
-            <button type="submit">Submit</button>
+            <button :disabled="updated" type="submit">Submit</button>
           </form>
         </div>
       </div>
@@ -124,6 +124,7 @@ export default {
         "Help",
         "Switch to Professional Account",
       ],
+      updated: false,
     };
   },
   computed: {
@@ -144,6 +145,7 @@ export default {
           phone: this.currentUser.phone,
           gender: this.currentUser.gender,
         });
+        this.updated = true;
       } catch (error) {
         console.log(error);
       }
@@ -242,5 +244,8 @@ textarea {
   width: 75%;
   height: inherit;
   padding: 2em;
+}
+button:disabled {
+  opacity: 0.5;
 }
 </style>

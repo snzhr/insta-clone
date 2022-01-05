@@ -66,8 +66,18 @@
               ><b>{{ getUser.followings.length }}</b> following</span
             >
           </div>
+          <div class="account_more__info">
+            <h4>{{ getUser.name }}</h4>
+            <p class="user__bio">{{ getUser.bio }}</p>
+            <p>
+              <a :href="getUser.website" target="_blank">{{
+                getUser.website
+              }}</a>
+            </p>
+          </div>
         </div>
       </div>
+
       <div class="account__posts">
         <div v-if="getUser.posts.length === 0" class="empty__posts">
           <img
@@ -236,7 +246,6 @@ input[type="file"] {
 }
 .main__top {
   display: flex;
-  width: fit-content;
   margin-bottom: 4em;
 }
 .profile__img {
@@ -262,6 +271,7 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
+/* .account__info {} */
 .account__info__username {
   display: flex;
   margin: 1em 0;
@@ -295,7 +305,6 @@ button {
 }
 .modal__content {
   width: 30vw;
-  /* height: 30vh; */
   text-align: center;
 }
 .modal__content > * {
@@ -316,5 +325,16 @@ label {
   font-size: 0.9em;
   padding: 1em;
   cursor: pointer;
+}
+.account_more__info {
+  margin-top: 1em;
+}
+.account_more__info > * {
+  margin-bottom: 0.5em;
+}
+.account_more__info p a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #12377c;
 }
 </style>

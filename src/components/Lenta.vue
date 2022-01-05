@@ -1,8 +1,12 @@
 <template>
   <div class="main__content">
     <stories-bar />
-    <div class="lenta">
+    <div class="lenta" v-if="posts.length >= 1">
       <single-post v-for="post in posts" :key="post.id" :post="post" />
+    </div>
+    <div class="empty__feed" v-else>
+      <h2>You have to follow someone in order to see the feed</h2>
+      <h4>See suggestions at the right</h4>
     </div>
   </div>
 </template>
@@ -18,7 +22,7 @@ export default {
   },
   data() {
     return {
-      posts: null,
+      posts: [],
       userFollowings: [],
     };
   },
@@ -55,5 +59,12 @@ export default {
 <style scoped>
 .main__content {
   width: 65%;
+}
+.empty__feed {
+  height: 100vh;
+  text-align: center;
+}
+.empty__feed > * {
+  margin: 1em 0;
 }
 </style>
