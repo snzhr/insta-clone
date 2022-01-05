@@ -141,13 +141,9 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import SingleCaption from "./SingleCaption.vue";
 export default {
   props: {
     singlePost: Object,
-  },
-  components: {
-    SingleCaption,
   },
   data() {
     return {

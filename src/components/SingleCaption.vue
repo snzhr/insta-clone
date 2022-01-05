@@ -9,8 +9,12 @@
       <span class="caption__text"> {{ singlePost.caption }} </span>
     </p>
     <div class="comments">
+      <modal v-if="showPostPreview" @closeModal="showPostPreview = false">
+        <post-preview :post="singlePost" :comments="allComments"></post-preview>
+      </modal>
       <span
         style="font-size: 0.9em; color: gray; cursor: pointer"
+        @click="showPostPreview = true"
         v-if="singlePost.comments.length > 2"
         >View all {{ singlePost.comments.length }} comments</span
       >
@@ -31,9 +35,32 @@
 </template>
 
 <script>
+import Modal from "./ui/Modal.vue";
+import PostPreview from "./PostPreview.vue";
+import axios from "axios";
 export default {
+  data() {
+    return {
+      showPostPreview: false,
+      allComments: [],
+    };
+  },
   props: {
     singlePost: Object,
+  },
+  components: {
+    PostPreview,
+    Modal,
+  },
+  async created() {
+    try {
+      const commentsRes = await axios(
+        `posts/${this.singlePost.id}/comments?_expand=user`
+      );
+      this.allComments = commentsRes.data;
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
