@@ -45,11 +45,18 @@
       <div class="account__posts">
         <div class="user__posts">
           <div
+            @click="select(post)"
             v-for="post in user.posts"
             :key="post.id"
             class="user__post"
             :style="{ backgroundImage: `url(${post.img})` }"
           ></div>
+          <modal v-if="showPostPreview" @closeModal="showPostPreview = false">
+            <post-preview
+              :post="currentPost"
+              :comments="currentPostComments"
+            ></post-preview>
+          </modal>
         </div>
       </div>
     </div>
@@ -60,9 +67,11 @@
 import axios from "axios";
 import Navbar from "../components/Navbar.vue";
 import ProfileImg from "../components/ui/ProfileImg.vue";
+import PostPreview from "../components/PostPreview.vue";
+import Modal from "../components/ui/Modal.vue";
 import { mapGetters } from "vuex";
 export default {
-  components: { Navbar, ProfileImg },
+  components: { Navbar, ProfileImg, PostPreview, Modal },
   data() {
     return {
       user: "",
@@ -70,12 +79,30 @@ export default {
       userFollowings: [],
       userFollowers: [],
       following: false,
+      showPostPreview: false,
+      currentPost: {},
+      currentPostComments: [],
     };
   },
   computed: {
     ...mapGetters(["getUser"]),
   },
   methods: {
+    select(post) {
+      this.currentPost = post;
+      this.getComments();
+      this.showPostPreview = true;
+    },
+    async getComments() {
+      try {
+        const commentsRes = await axios(
+          `posts/${this.currentPost.id}/comments?_expand=user`
+        );
+        this.currentPostComments = commentsRes.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async follow(user) {
       try {
         const res = await axios.post(`/followings`, {

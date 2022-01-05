@@ -39,7 +39,6 @@ export default {};
   background-color: white;
   border-radius: 10px;
   position: relative;
-  text-align: center;
   overflow: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

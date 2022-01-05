@@ -92,37 +92,10 @@
             }"
           ></div>
           <modal v-if="showPostPreview" @closeModal="showPostPreview = false">
-            <div class="post__preview">
-              <div class="img__view">
-                <img :src="currentPost.img" :alt="currentPost.id" />
-              </div>
-              <div class="img__details">
-                <div class="details__header">
-                  <div
-                    class="details__username"
-                    style="display: flex; align-items: center"
-                  >
-                    <profile-img
-                      style="width: 2em; height: 2em"
-                      :userImg="getUser.profileImg"
-                    ></profile-img>
-                    <span
-                      style="
-                        margin-left: 0.5em;
-                        font-weight: 600;
-                        font-size: 0.9em;
-                      "
-                      >{{ getUser.username }}</span
-                    >
-                  </div>
-                  <p style="font-size: 1.5em; cursor: pointer">...</p>
-                </div>
-                <div class="details__body">Details</div>
-                <div class="comment__section">
-                  <post-caption :singlePost="currentPost"></post-caption>
-                </div>
-              </div>
-            </div>
+            <post-preview
+              :post="currentPost"
+              :comments="currentPostComments"
+            ></post-preview>
           </modal>
         </div>
       </div>
@@ -138,16 +111,17 @@ import { mapGetters } from "vuex";
 import Navbar from "../components/Navbar.vue";
 import Modal from "../components/ui/Modal.vue";
 import ProfileImg from "../components/ui/ProfileImg.vue";
-import PostCaption from "../components/PostCaption.vue";
+import PostPreview from "../components/PostPreview.vue";
 import AuthFooter from "../components/ui/AuthFooter.vue";
 import AppIcons from "../components/ui/AppIcons.vue";
 export default {
-  components: { Navbar, Modal, ProfileImg, AuthFooter, AppIcons, PostCaption },
+  components: { Navbar, Modal, ProfileImg, AuthFooter, AppIcons, PostPreview },
   data() {
     return {
       showModal: false,
       showPostPreview: false,
       currentPost: {},
+      currentPostComments: [],
     };
   },
   computed: {
@@ -156,7 +130,18 @@ export default {
   methods: {
     select(post) {
       this.currentPost = post;
+      this.getComments();
       this.showPostPreview = true;
+    },
+    async getComments() {
+      try {
+        const commentsRes = await axios(
+          `posts/${this.currentPost.id}/comments?_expand=user`
+        );
+        this.currentPostComments = commentsRes.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     changeImg() {
       this.showModal = true;
@@ -193,35 +178,6 @@ export default {
 </script>
 
 <style scoped>
-.details__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #dcdcdc;
-  padding: 1em;
-}
-.post__preview {
-  display: flex;
-  width: 80vw;
-  height: 90vh;
-}
-.img__details {
-  width: 50%;
-}
-.img__view {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  border-right: 1px solid #dcdcdc;
-}
-.details__body {
-  /* background-color: aqua; */
-  height: 60%;
-  border-bottom: 1px solid #dcdcdc;
-}
-.img__view img {
-  width: 100%;
-}
 .empty__posts {
   display: flex;
   background-color: white;
@@ -263,7 +219,6 @@ input[type="file"] {
   justify-content: center;
   margin: 0 5em;
 }
-
 .account__username,
 button {
   margin-right: 1em;
@@ -305,6 +260,7 @@ button {
 .modal__content {
   width: 30vw;
   height: 30vh;
+  text-align: center;
 }
 .modal__content > * {
   border-bottom: 1px solid #dcdcdc;
