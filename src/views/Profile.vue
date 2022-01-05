@@ -185,7 +185,6 @@ export default {
         const res = await axios.patch(`/users/${this.getUser.id}`, {
           profileImg: imageUrl,
         });
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -266,6 +265,7 @@ button {
 .account__info__username {
   display: flex;
   margin: 1em 0;
+  align-items: center;
 }
 .account__followers__info span {
   margin-right: 1em;

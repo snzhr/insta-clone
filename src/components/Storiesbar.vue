@@ -47,7 +47,21 @@ export default {
   border-radius: 0.2em;
   padding: 0.5em;
   margin-bottom: 1.5em;
+  overflow-x: scroll;
 }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+  cursor: pointer;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: #fafafa;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #dcdcdc;
+  width: 5px;
+}
+
 .story span {
   font-size: 0.8em;
   margin-top: 0.5em;

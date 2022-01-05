@@ -31,7 +31,20 @@
             ></profile-img>
             <span class="username">{{ user.username }}</span>
           </div>
-          <p class="profile__btn" @click="follow(user)">Follow</p>
+          <p
+            v-show="followed === false"
+            class="profile__btn"
+            @click="follow(user)"
+          >
+            Follow
+          </p>
+          <p
+            v-show="followed === true"
+            class="profile__btn"
+            @click="unfollow(user)"
+          >
+            Unfollow
+          </p>
         </div>
       </div>
     </div>
@@ -49,6 +62,8 @@ export default {
   data() {
     return {
       suggestionAccounts: [],
+      suggestionFollowers: [],
+      followed: false,
     };
   },
   computed: {
@@ -65,6 +80,26 @@ export default {
           userId: user.id,
           follower: this.getUser,
         });
+        const userFollowersres = await axios(
+          `/users/${user.id}?_embed=followers`
+        );
+        this.suggestionFollowers = userFollowersres.data.followers;
+        this.followed = true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async unfollow(user) {
+      try {
+        let followerID = null;
+        for (const item of this.suggestionFollowers) {
+          if (item.follower.id === this.getUser.id) {
+            followerID = item.id;
+          }
+        }
+        const res = await axios.delete(`/followings/${followerID}`);
+        const resFollower = await axios.delete(`/followers/${followerID}`);
+        this.followed = false;
       } catch (error) {
         console.log(error);
       }
@@ -81,8 +116,6 @@ export default {
     try {
       const res = await axios(`/users?id_ne=${currentUserId}${query}`);
       this.suggestionAccounts = res.data;
-
-      // console.log(res);
     } catch (error) {
       console.log(error);
     }

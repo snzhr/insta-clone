@@ -116,6 +116,11 @@ export default {
           userId: user.id,
           follower: this.getUser,
         });
+        const getFollowersRes = await axios(
+          `/users/${user.id}?_embed=followers`
+        );
+        this.userFollowers = getFollowersRes.data.followers;
+        this.following = true;
       } catch (error) {
         console.log(error);
       }
@@ -130,6 +135,7 @@ export default {
         }
         const res = await axios.delete(`/followings/${followerID}`);
         const resFollower = await axios.delete(`/followers/${followerID}`);
+        this.following = false;
       } catch (error) {
         console.log(error);
       }
