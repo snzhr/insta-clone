@@ -15,7 +15,9 @@
     <div class="post__body">
       <img :src="post.img" alt="" />
     </div>
-    <post-caption :singlePost="post"></post-caption>
+    <post-caption :singlePost="post">
+      <single-caption :singlePost="post"></single-caption>
+    </post-caption>
     <!-- <div class="post__footer">
       <div class="footer__buttons">
         <div class="left__buttons">
@@ -194,21 +196,23 @@
 import axios from "axios";
 import ProfileImg from "../components/ui/ProfileImg.vue";
 import PostCaption from "../components/PostCaption.vue";
+import SingleCaption from "../components/SingleCaption.vue";
 import { mapGetters } from "vuex";
 export default {
   props: {
     post: Object,
   },
-  // data() {
-  //   return {
-  //     postComment: "",
-  //     postLikes: 0,
-  //     isLiked: null,
-  //   };
-  // },
+  data() {
+    return {
+      postComment: "",
+      postLikes: 0,
+      isLiked: null,
+    };
+  },
   components: {
     ProfileImg,
     PostCaption,
+    SingleCaption,
   },
   computed: {
     ...mapGetters(["getUser"]),

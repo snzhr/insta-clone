@@ -91,7 +91,7 @@
               backgroundImage: `url(${post.img})`,
             }"
           ></div>
-          <modal v-show="showPostPreview" @closeModal="showPostPreview = false">
+          <modal v-if="showPostPreview" @closeModal="showPostPreview = false">
             <div class="post__preview">
               <div class="img__view">
                 <img :src="currentPost.img" :alt="currentPost.id" />
@@ -118,7 +118,9 @@
                   <p style="font-size: 1.5em; cursor: pointer">...</p>
                 </div>
                 <div class="details__body">Details</div>
-                <div class="comment__section"></div>
+                <div class="comment__section">
+                  <post-caption :singlePost="currentPost"></post-caption>
+                </div>
               </div>
             </div>
           </modal>
@@ -136,15 +138,16 @@ import { mapGetters } from "vuex";
 import Navbar from "../components/Navbar.vue";
 import Modal from "../components/ui/Modal.vue";
 import ProfileImg from "../components/ui/ProfileImg.vue";
+import PostCaption from "../components/PostCaption.vue";
 import AuthFooter from "../components/ui/AuthFooter.vue";
 import AppIcons from "../components/ui/AppIcons.vue";
 export default {
-  components: { Navbar, Modal, ProfileImg, AuthFooter, AppIcons },
+  components: { Navbar, Modal, ProfileImg, AuthFooter, AppIcons, PostCaption },
   data() {
     return {
       showModal: false,
       showPostPreview: false,
-      currentPost: "",
+      currentPost: {},
     };
   },
   computed: {

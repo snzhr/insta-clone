@@ -3,9 +3,9 @@
     <div class="footer__buttons">
       <div class="left__buttons">
         <span
-          v-if="singlePost.likedUsers.includes(this.getUser.id)"
           @click="unlikePost"
           class="like__btn"
+          v-if="singlePost.likedUsers.includes(this.getUser.id)"
         >
           <svg
             aria-label="Unlike"
@@ -20,7 +20,7 @@
             ></path>
           </svg>
         </span>
-        <span v-else class="like__btn" @click="likePost"
+        <span class="like__btn" @click="likePost" v-else
           ><svg
             aria-label="Like"
             class="_8-yf5"
@@ -107,7 +107,7 @@
       </div>
     </div>
     <p class="likes">{{ postLikes }} {{ postLikes == 1 ? "like" : "likes" }}</p>
-    <single-caption :singlePost="singlePost"></single-caption>
+    <slot></slot>
     <p class="caption__time">{{ timeSince(singlePost.createdAt) }}</p>
     <div class="caption__add__comment">
       <div class="smiles">
