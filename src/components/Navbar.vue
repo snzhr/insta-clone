@@ -12,6 +12,7 @@
             @focus="showSearch = true"
             type="text"
             @input="search"
+            v-model="searchInput"
             placeholder="Search"
           />
           <span v-show="showSearch" @click="showSearch = false" class="erase"
@@ -207,6 +208,7 @@ export default {
       showMenu: false,
       showModal: false,
       showSearch: false,
+      searchInput: "",
       foundItems: [],
     };
   },
@@ -217,7 +219,12 @@ export default {
     async search(e) {
       try {
         const res = await axios(`/users?q=${e.target.value}`);
-        this.foundItems = res.data;
+        this.foundItems = res.data.filter(
+          (item) => item.id !== this.$store.getters.getUser.id
+        );
+        if (this.searchInput === "") {
+          this.foundItems = [];
+        }
       } catch (error) {
         console.log(error);
       }

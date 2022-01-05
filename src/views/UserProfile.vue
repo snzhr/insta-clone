@@ -158,6 +158,18 @@ export default {
         this.following = true;
       }
     }
+    this.$watch(
+      () => this.$route.params,
+      async (toParams, previousParams) => {
+        const res = await axios(
+          `/users/${this.$route.params.id}?_embed=followings&_embed=posts&_embed=followers`
+        );
+        this.user = res.data;
+        this.userPosts = res.data.posts;
+        this.userFollowings = res.data.followings;
+        this.userFollowers = res.data.followers;
+      }
+    );
   },
 };
 </script>
