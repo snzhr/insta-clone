@@ -90,12 +90,30 @@
             :style="{
               backgroundImage: `url(${post.img})`,
             }"
-          ></div>
+          >
+            <div class="overlay"></div>
+          </div>
           <modal v-if="showPostPreview" @closeModal="showPostPreview = false">
-            <post-preview
-              :post="currentPost"
-              :comments="currentPostComments"
-            ></post-preview>
+            <post-preview :post="currentPost" :comments="currentPostComments">
+              <div class="post__settings">
+                <p
+                  @click="showPostSettings = true"
+                  style="font-size: 1.5em; cursor: pointer"
+                >
+                  ...
+                </p>
+                <modal
+                  v-if="showPostSettings"
+                  @closeModal="showPostSettings = false"
+                >
+                  <div class="post__options">
+                    <div class="modal__content">
+                      <p @click="deletePost">Delete</p>
+                    </div>
+                  </div>
+                </modal>
+              </div>
+            </post-preview>
           </modal>
         </div>
       </div>
@@ -122,6 +140,7 @@ export default {
       showPostPreview: false,
       currentPost: {},
       currentPostComments: [],
+      showPostSettings: false,
     };
   },
   computed: {
@@ -132,6 +151,15 @@ export default {
       this.currentPost = post;
       this.getComments();
       this.showPostPreview = true;
+    },
+    async deletePost() {
+      try {
+        axios.delete(`/posts/${this.currentPost.id}`);
+        this.showPostSettings = false;
+        this.showPostPreview = false;
+      } catch (error) {
+        console.log(error);
+      }
     },
     async getComments() {
       try {
@@ -245,6 +273,13 @@ button {
   border-top: 1px solid #dcdcdc;
   padding-top: 2em;
 }
+.overlay {
+  width: 100%;
+  height: inherit;
+}
+.overlay:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 .user__posts {
   display: flex;
   flex-wrap: wrap;
@@ -259,7 +294,7 @@ button {
 }
 .modal__content {
   width: 30vw;
-  height: 30vh;
+  /* height: 30vh; */
   text-align: center;
 }
 .modal__content > * {

@@ -18,7 +18,8 @@
             >{{ postAuthor.username }}</span
           >
         </div>
-        <p style="font-size: 1.5em; cursor: pointer">...</p>
+        <!-- <p style="font-size: 1.5em; cursor: pointer">...</p> -->
+        <slot></slot>
       </div>
       <div class="details__body">
         <div class="caption">

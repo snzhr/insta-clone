@@ -37,7 +37,7 @@ export default {};
 }
 .modal {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   position: relative;
   overflow: scroll;
   -ms-overflow-style: none; /* IE and Edge */

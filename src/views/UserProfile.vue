@@ -50,7 +50,10 @@
             :key="post.id"
             class="user__post"
             :style="{ backgroundImage: `url(${post.img})` }"
-          ></div>
+          >
+            <div class="overlay"></div>
+          </div>
+
           <modal v-if="showPostPreview" @closeModal="showPostPreview = false">
             <post-preview
               :post="currentPost"
@@ -216,7 +219,15 @@ button {
   display: flex;
   flex-wrap: wrap;
 }
+.overlay {
+  width: 100%;
+  height: inherit;
+}
+.overlay:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 .user__post {
+  cursor: pointer;
   width: 29%;
   margin: 0 1em;
   height: 40vh;
