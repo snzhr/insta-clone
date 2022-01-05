@@ -1,12 +1,32 @@
 <template>
-  <router-view />
+  <div v-if="isSmallScreen" style="padding: 3em">
+    <h2>
+      You are using a phone or tablet. This app is for PC. Please open it in PC.
+    </h2>
+  </div>
+  <router-view v-else />
 </template>
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      screenWidth: 0,
+      isSmallScreen: false,
+    };
+  },
   computed: {
     ...mapGetters(["getUser"]),
+  },
+  watch: {
+    screenWidth(newVal, oldVal) {
+      if (newVal <= 1300) {
+        this.isSmallScreen = true;
+      } else {
+        this.isSmallScreen = false;
+      }
+    },
   },
   async created() {
     if (!this.getUser) {
@@ -21,6 +41,7 @@ export default {
         console.log(error);
       }
     }
+    this.screenWidth = screen.width;
   },
 };
 </script>

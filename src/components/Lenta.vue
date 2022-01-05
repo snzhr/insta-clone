@@ -1,7 +1,7 @@
 <template>
   <div class="main__content">
     <stories-bar />
-    <div class="lenta" v-if="posts.length >= 1">
+    <div class="lenta" v-if="userFollowings.length >= 1">
       <single-post v-for="post in posts" :key="post.id" :post="post" />
     </div>
     <div class="empty__feed" v-else>

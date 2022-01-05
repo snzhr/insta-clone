@@ -142,6 +142,10 @@ export default {
         }
         const res = await axios.delete(`/followings/${followerID}`);
         const resFollower = await axios.delete(`/followers/${followerID}`);
+        const getFollowersRes = await axios(
+          `/users/${user.id}?_embed=followers`
+        );
+        this.userFollowers = getFollowersRes.data.followers;
         this.following = false;
       } catch (error) {
         console.log(error);
