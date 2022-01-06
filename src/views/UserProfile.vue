@@ -207,7 +207,9 @@ export default {
   justify-content: center;
   margin: 0 5em;
 }
-/* .account__info {} */
+.account__info {
+  width: 60%;
+}
 .account__username,
 button {
   margin-right: 1em;

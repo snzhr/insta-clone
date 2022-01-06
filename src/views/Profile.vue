@@ -272,7 +272,9 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
-/* .account__info {} */
+.account__info {
+  width: 60%;
+}
 .account__info__username {
   display: flex;
   margin: 1em 0;

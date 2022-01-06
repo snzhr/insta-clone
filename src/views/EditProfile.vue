@@ -43,7 +43,7 @@
                 v-model="currentUser.website"
                 type="text"
                 id="website"
-                placeholder="Website"
+                placeholder="ex: (http://yourwebsite.com)"
               />
             </div>
             <div>

@@ -98,6 +98,7 @@ export default {
   font-weight: 600;
   font-size: 0.9em;
   margin: 0.7em auto 1em auto;
+  cursor: pointer;
 }
 .register__page__form input {
   width: 100%;
