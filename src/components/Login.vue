@@ -3,11 +3,7 @@
     <div class="register__page__form">
       <img src="../assets/instagram_logo.png" alt="" />
       <form @submit.prevent="login">
-        <input
-          v-model="user.email"
-          type="email"
-          placeholder="Phone number, username, or email"
-        />
+        <input v-model="user.email" type="email" placeholder="Email" />
         <input v-model="user.password" type="password" placeholder="Password" />
         <button :disabled="formFull" type="submit">Log In</button>
         <span class="or">OR</span>
