@@ -134,6 +134,7 @@
       >
         Post
       </button>
+      <!-- <user-mention :comment="postComment"></user-mention> -->
     </div>
   </div>
 </template>
@@ -291,6 +292,7 @@ export default {
 .caption__add__comment {
   display: flex;
   align-items: center;
+  position: relative;
 }
 .caption__add__comment input {
   width: 100%;

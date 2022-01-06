@@ -38,7 +38,6 @@ export default {
 }
 .main {
   width: 73%;
-  height: 100vh;
   margin: auto;
   display: flex;
   justify-content: space-between;

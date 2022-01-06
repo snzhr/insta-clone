@@ -53,7 +53,7 @@ export default {
   methods: {
     redirectToUser(comment) {
       if (comment.userId === this.$store.getters.getUser.id) {
-        this.$router.replace(`/profile/${comment.username}`);
+        this.$router.replace(`/profile/${comment.userName}`);
       } else {
         this.$router.replace(`/user/${comment.userId}`);
       }
