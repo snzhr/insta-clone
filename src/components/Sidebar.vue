@@ -148,7 +148,6 @@ export default {
 .profile span {
   margin-left: 1em;
 }
-
 .suggestions__header {
   margin-bottom: 1em;
   display: flex;
@@ -162,6 +161,18 @@ export default {
   font-size: 0.8em;
   font-weight: 600;
 }
+.suggestion__account {
+  overflow-y: scroll;
+  height: 60vh;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: #dcdcdc;
+}
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+}
+
 .username {
   font-weight: 800;
   font-size: 0.9em;
