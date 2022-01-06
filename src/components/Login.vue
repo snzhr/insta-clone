@@ -9,7 +9,7 @@
           placeholder="Phone number, username, or email"
         />
         <input v-model="user.password" type="password" placeholder="Password" />
-        <button type="submit">Log In</button>
+        <button :disabled="formFull" type="submit">Log In</button>
         <span class="or">OR</span>
       </form>
       <p class="login__facebook__btn">Log in with Facebook</p>
@@ -43,6 +43,15 @@ export default {
         password: "",
       },
     };
+  },
+  computed: {
+    formFull() {
+      if (this.user.email !== "" && this.user.password !== "") {
+        return false;
+      } else {
+        return true;
+      }
+    },
   },
   methods: {
     login() {
@@ -123,6 +132,7 @@ export default {
 }
 button[type="submit"]:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 .login__facebook__btn {
   color: #3b5998;

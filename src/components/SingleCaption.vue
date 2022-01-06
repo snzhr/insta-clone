@@ -23,11 +23,9 @@
         v-for="comment in singlePost.comments.slice(0, 2)"
         :key="comment.id"
       >
-        <span
-          @click="$router.push(`/user/${comment.userId}`)"
-          class="caption__username"
-          >{{ comment.userName }}</span
-        >
+        <span @click="redirectToUser(comment)" class="caption__username">{{
+          comment.userName
+        }}</span>
         <span class="caption__text">{{ comment.text }}</span>
       </p>
     </div>
@@ -51,6 +49,15 @@ export default {
   components: {
     PostPreview,
     Modal,
+  },
+  methods: {
+    redirectToUser(comment) {
+      if (comment.userId === this.$store.getters.getUser.id) {
+        this.$router.replace(`/profile/${comment.username}`);
+      } else {
+        this.$router.replace(`/user/${comment.userId}`);
+      }
+    },
   },
   async created() {
     try {

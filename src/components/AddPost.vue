@@ -1,6 +1,6 @@
 <template>
   <div class="modal__content">
-    <div v-show="!uploaded" class="modal__header">
+    <div v-show="!uploaded" class="modal__header" style="text-align: center">
       <h4>Create new post</h4>
     </div>
     <div v-show="uploaded" class="modal__header__uploaded">
@@ -51,6 +51,7 @@
           cols="35"
           rows="10"
         ></textarea>
+        <h4 v-show="uploadingPost">Uploading...</h4>
       </div>
     </div>
   </div>
@@ -75,6 +76,7 @@ export default {
       imgPreview: null,
       uploaded: false,
       imgReady: false,
+      uploadingPost: false,
     };
   },
   computed: {
@@ -100,6 +102,7 @@ export default {
     },
     async upload() {
       try {
+        this.uploadingPost = true;
         const storage = firebase.storage();
         const storageRef = storage.ref();
         const imageRef = storageRef.child(Date.now() + this.localImgUrl.name);
@@ -108,6 +111,7 @@ export default {
         this.post.img = imageUrl;
         this.post.userId = this.getUser.id;
         this.share();
+        this.uploadingPost = false;
         this.discard();
       } catch (error) {
         console.log(error);
@@ -116,7 +120,6 @@ export default {
     async share() {
       try {
         const res = await axios.post(`/posts`, this.post);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }

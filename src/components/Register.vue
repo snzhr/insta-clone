@@ -6,19 +6,16 @@
       <button>Log in with Facebook</button>
       <span class="or">OR</span>
       <form @submit.prevent="register">
-        <input
-          v-model="user.email"
-          type="email"
-          placeholder="Mobile Number or Email"
-        />
+        <input v-model="user.email" type="email" placeholder="Email" />
         <input v-model="user.fullname" type="text" placeholder="Fullname" />
         <input v-model="user.username" type="text" placeholder="Username" />
         <input v-model="user.password" type="password" placeholder="Password" />
-        <button type="submit">Sign up</button>
+        <span class="agree__link">
+          Do not use your real Instagram user credentials. We didn't spend
+          enough money for security :-)
+        </span>
+        <button :disabled="formFull" type="submit">Sign up</button>
       </form>
-      <span class="agree__link">
-        By signing up, you agree to our Terms , Data Policy and Cookies Policy .
-      </span>
     </div>
     <div class="bottom__login__block">
       <span class="login__link"
@@ -57,6 +54,20 @@ export default {
         gender: "",
       },
     };
+  },
+  computed: {
+    formFull() {
+      if (
+        this.user.email !== "" &&
+        this.user.fullname !== "" &&
+        this.user.username !== "" &&
+        this.user.password !== ""
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
   },
   methods: {
     async register() {
@@ -120,6 +131,7 @@ export default {
   font-weight: 600;
   font-size: 0.9em;
   margin: 0.7em auto 1em auto;
+  cursor: pointer;
 }
 .register__page__form input {
   width: 100%;
@@ -138,8 +150,10 @@ export default {
 }
 .agree__link {
   display: block;
-  color: gray;
+  color: red;
+  font-weight: 600;
   font-size: 0.8em;
+  text-transform: uppercase;
 }
 .bottom__login__block {
   margin-bottom: 1em;
@@ -155,5 +169,6 @@ export default {
 }
 button[type="submit"]:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>

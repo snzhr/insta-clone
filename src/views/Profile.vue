@@ -195,6 +195,7 @@ export default {
         const res = await axios.patch(`/users/${this.getUser.id}`, {
           profileImg: imageUrl,
         });
+        this.showModal = false;
       } catch (error) {
         console.log(error);
       }
@@ -205,7 +206,7 @@ export default {
           profileImg:
             "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
         });
-        console.log("removed successfully");
+        this.showModal = false;
       } catch (error) {
         console.log(error);
       }

@@ -43,7 +43,7 @@
               <div
                 class="details__username"
                 style="display: flex; align-items: center"
-                @click="$router.push(`/user/${comment.userId}`)"
+                @click="redirectToUser(comment.user)"
               >
                 <profile-img
                   style="width: 2em; height: 2em"
@@ -87,6 +87,15 @@ export default {
   },
   computed: {
     ...mapGetters(["getUser"]),
+  },
+  methods: {
+    redirectToUser(user) {
+      if (user.id === this.getUser.id) {
+        this.$router.replace(`/profile/${this.getUser.username}`);
+      } else {
+        this.$router.replace(`/user/${user.id}`);
+      }
+    },
   },
   async created() {
     try {
