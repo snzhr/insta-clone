@@ -9,11 +9,11 @@ You can create a new account (Do not use your real account credentials) or you c
 
 (If you created an account and continued with account, your changes are not persisted. Read more [here](https://my-json-server.typicode.com/))
 
-###### Frontend:
+#### Frontend:
 
 - Vue 3, Vuex, axios
 
-###### Backend:
+#### Backend:
 
 - json-server
 - json-server-auth
