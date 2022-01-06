@@ -53,7 +53,7 @@
         <div class="user__posts">
           <div
             @click="select(post)"
-            v-for="post in user.posts"
+            v-for="post in user.posts.reverse()"
             :key="post.id"
             class="user__post"
             :style="{ backgroundImage: `url(${post.img})` }"

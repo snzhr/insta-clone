@@ -94,7 +94,7 @@
         <div v-else class="user__posts">
           <div
             @click="select(post)"
-            v-for="post in getUser.posts"
+            v-for="post in getUser.posts.reverse()"
             :key="post.id"
             class="user__post"
             :style="{
