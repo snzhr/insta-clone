@@ -1,4 +1,4 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://fake-insta-server.herokuapp.com/'
+axios.defaults.baseURL = 'https://solar-poised-salad.glitch.me/'
 // axios.defaults.baseURL = 'http://localhost:3000'
