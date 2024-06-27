@@ -52,6 +52,7 @@ export default {
         bio: "",
         phone: "",
         gender: "",
+        verified: false
       },
     };
   },

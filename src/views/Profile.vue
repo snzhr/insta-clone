@@ -22,7 +22,9 @@
         ></profile-img>
         <div class="account__info">
           <div class="account__info__username">
-            <p class="account__username">{{ getUser.username }}</p>
+            <p class="account__username">{{ getUser.username }}
+              <img v-if="getUser.verified" class="verified" src="../assets/verified.png" />
+            </p>
             <button @click="$router.push('/profile/edit')">Edit profile</button>
             <div class="setting__btn">
               <svg
@@ -258,7 +260,7 @@ input[type="file"] {
 }
 .account__username,
 button {
-  margin-right: 1em;
+  margin-right: .5em;
 }
 .account__username {
   font-size: 1.7em;
@@ -339,5 +341,9 @@ label {
   text-decoration: none;
   font-weight: 600;
   color: #12377c;
+}
+
+.verified{
+  max-width: 20px;
 }
 </style>

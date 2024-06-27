@@ -11,7 +11,9 @@
         ></profile-img>
         <div class="account__info">
           <div class="account__info__username">
-            <p class="account__username">{{ user.username }}</p>
+            <p class="account__username">{{ user.username }}
+              <img v-if="getUser.verified" class="verified" src="../assets/verified.png" />
+            </p>
             <button
               @click="follow(user)"
               class="follow"
@@ -53,7 +55,7 @@
         <div class="user__posts">
           <div
             @click="select(post)"
-            v-for="post in user.posts.reverse()"
+            v-for="post in user.posts?.reverse()"
             :key="post.id"
             class="user__post"
             :style="{ backgroundImage: `url(${post.img})` }"
@@ -273,5 +275,8 @@ button {
   text-decoration: none;
   font-weight: 600;
   color: #12377c;
+}
+.verified{
+  width: 20px;
 }
 </style>
